@@ -8,7 +8,7 @@ import android.widget.TextView;
 import hangu.android.R;
 
 /**
- * Created by victor menegusso on 07/03/17.
+ * Created by Victor Menegusso on 07/03/17.
  */
 
 public class ListWebAppsViewHolder extends RecyclerView.ViewHolder{
@@ -16,6 +16,7 @@ public class ListWebAppsViewHolder extends RecyclerView.ViewHolder{
         final TextView nome;
         final TextView url;
         final TextView httpMethod;
+        final TextView status;
 
         public ListWebAppsViewHolder(View view) {
             super(view);
@@ -28,6 +29,9 @@ public class ListWebAppsViewHolder extends RecyclerView.ViewHolder{
 
             httpMethod = (TextView)
                     view.findViewById(R.id.webapps_httpmethod);
+
+            status = (TextView)
+                    view.findViewById(R.id.webapps_status);
         }
 
     public void btnClick(View v){

@@ -29,12 +29,12 @@
             android:text="httpmethod"
             android:textSize="20dp" />
 
-        <Button
+
+        <TextView
+            android:id="@+id/webapps_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="testar"
-            android:onClick="btnClick"
-            />
-
+            android:text="status"
+            android:textSize="20dp" />
 </LinearLayout>
 

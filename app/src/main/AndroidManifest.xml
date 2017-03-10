@@ -32,6 +32,7 @@
         </activity>
 
         <service android:name=".service.socket.ReaderLog" />
+        <service android:name=".service.HttpConnector" />
 
         <activity android:name=".ListWebAppsActivity">
             <intent-filter>
