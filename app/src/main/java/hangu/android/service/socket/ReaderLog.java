@@ -18,6 +18,13 @@ public class ReaderLog extends IntentService {
 
 
     public static final String ACTION = "hangu.android.service.socket.ReaderLog";
+
+    public static final String IN_SOCKET_HOST = "IN_SOCKET_HOST";
+    public static final String IN_SOCKET_PORT = "IN_SOCKET_PORT";
+    public static final String IN_PATH = "IN_PATH";
+
+    public static final String OUT_TXT_READ = "OUT_STATUS";
+
     public ReaderLog() {
         super("ReaderLog");
     }
@@ -26,11 +33,61 @@ public class ReaderLog extends IntentService {
     protected void onHandleIntent(Intent workIntent) {
         Log.d("ReaderLog","onHandleIntent");
 
-        String dataString = workIntent.getDataString();
-        //Log.d("ReaderLog","dataString");
+        final String host = workIntent.getStringExtra(IN_SOCKET_HOST);
+        final String path = workIntent.getStringExtra(IN_PATH);
+        final int port = workIntent.getIntExtra(IN_SOCKET_PORT,5000);
 
         new Thread(new Runnable(){
             public void run() {
+                try{
+                    int bytesAvailable;
+                    String txtReturn="";
+
+                    Socket socketClient = new Socket(host,port);
+
+                    InputStream inputStream = socketClient.getInputStream();
+                    OutputStream outputStream = socketClient.getOutputStream();
+
+                    DataInputStream dataInputStream = new DataInputStream(inputStream);
+                    DataOutputStream dataOutInputStream = new DataOutputStream(outputStream);
+
+                    String json="{\"service\":\"read_log\",\"path\":\""+path+"\"}";
+                    dataOutInputStream.writeUTF(json);
+
+
+                    while(true){
+
+                        txtReturn += dataInputStream.readUTF();
+                        //Log.d("ReaderLog", txtReturn);
+
+                        if(dataInputStream.available() == 0) {
+                            Log.d("ReaderLog", "sendBroadcast");
+                            Intent intent = new Intent(ACTION);
+                            intent.putExtra(OUT_TXT_READ, txtReturn);
+                            LocalBroadcastManager.getInstance( getBaseContext()).sendBroadcast(intent);
+                            txtReturn = "";
+                        }
+
+
+                    }
+
+                    //socketClient.close();
+
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+}
+
+
+        /*
+        new Thread(new Runnable(){
+            public void run() {
+
+
                 int bytesAvailable;
                 String id = UUID.randomUUID().toString();
                 try{
@@ -63,7 +120,7 @@ public class ReaderLog extends IntentService {
                         }
 
                         */
-
+/*
                         Log.d("while",id);
                         Thread.sleep(5000);
                     }
@@ -95,8 +152,6 @@ public class ReaderLog extends IntentService {
 
                 }
                 */
-
+/*
             }
-        }).start();
-    }
-}
+        }).start();*/

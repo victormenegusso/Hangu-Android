@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import java.util.List;
 import hangu.android.dao.WebAppDAO;
+import hangu.android.entity.Status;
 import hangu.android.entity.WebApp;
 import hangu.android.service.HttpConnector;
 
@@ -94,18 +95,13 @@ public class ListWebAppsActivity extends AppCompatActivity {
             url = intent.getStringExtra(HttpConnector.OUT_URL);
             isCon = intent.getBooleanExtra(HttpConnector.OUT_ISCONNECTED,false);
 
-            //Log.d("tail","onReceive");
-            //Log.d("tail",intent.getAction());
-            //Log.d("tail",url);
-            //Log.d("tail",Boolean.toString( isCon ));
-
             for(WebApp webApp : webApps){
                 if(webApp.getUrl().equals(url)){
 
                     if(isCon)
-                        webApp.setStatus(WebApp.STATUS.ONLINE);
+                        webApp.setStatus(Status.ONLINE);
                     else
-                        webApp.setStatus(WebApp.STATUS.OFFLINE);
+                        webApp.setStatus(Status.OFFLINE);
 
                     listWebAppsAdapter.notifyDataSetChanged();
                     break;

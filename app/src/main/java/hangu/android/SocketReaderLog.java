@@ -10,25 +10,35 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import hangu.android.entity.ServerApp;
+import hangu.android.entity.WebApp;
 import hangu.android.service.socket.ReaderLog;
 
 public class SocketReaderLog extends AppCompatActivity {
 
-    private InnerReceiver receiver = null;
+    private ServerApp serverApp;
 
+    private InnerReceiver receiver = null;
     private TextView txtView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("tail","oncreate");
+        Log.d("SocketReaderLog","oncreate");
         setContentView(R.layout.activity_socket_reader_log);
+
 
         txtView = (TextView)this.findViewById(R.id.socket_reader_log_txtView_log);
 
         receiver = new InnerReceiver();
         Intent intent = new Intent(this, ReaderLog.class);
+
+        intent.putExtra(ReaderLog.IN_SOCKET_HOST, "192.168.25.178");
+        intent.putExtra(ReaderLog.IN_SOCKET_PORT,5000);
+        intent.putExtra(ReaderLog.IN_PATH,"/home/victor/Downloads/apache-tomcat-8.5.11/logs/catalina.out");
+
         startService(intent);
+
         /*
         if(receiver == null) {
             Log.d("tail","receiver == null");
@@ -49,7 +59,7 @@ public class SocketReaderLog extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("tail","onResume");
+        Log.d("SocketReaderLog","onResume");
 
         IntentFilter filter = new IntentFilter(ReaderLog.ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
@@ -58,7 +68,7 @@ public class SocketReaderLog extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("tail","onPause");
+        Log.d("SocketReaderLog","onPause");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
@@ -71,9 +81,9 @@ public class SocketReaderLog extends AppCompatActivity {
 
 
 
-            Log.d("tail","onReceive");
+            Log.d("SocketReaderLog","onReceive");
             //Log.d("tail",intent.getAction());
-            String returno = intent.getStringExtra("read");
+            String returno = intent.getStringExtra(ReaderLog.OUT_TXT_READ);
             txtView.setText( txtView.getText() + returno );
             /*
             String fileName = intent.getStringExtra("fileName");

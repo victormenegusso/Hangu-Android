@@ -8,7 +8,7 @@ public class WebApp {
     private String name;
     private String url;
     private String httpMethod;
-    private STATUS status;
+    private Status status;
 
     public WebApp(){
     }
@@ -17,7 +17,7 @@ public class WebApp {
         this.name = name;
         this.url = url;
         this.httpMethod = httpMethod;
-        this.status = STATUS.WAIT_CONNECTION;
+        this.status = Status.WAIT_CONNECTION;
     }
 
     public String getName() {
@@ -44,29 +44,11 @@ public class WebApp {
         this.httpMethod = httpMethod;
     }
 
-    public STATUS getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(STATUS status) {
+    public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public enum STATUS {
-        ONLINE("ONLINE"),
-        WAIT_CONNECTION("WAIT_CONNECTION"),
-        OFFLINE("OFFLINE")
-        ;
-
-        private final String text;
-
-        private STATUS(final String text) {
-            this.text = text;
-        }
-
-        @Override
-        public String toString() {
-            return text;
-        }
     }
 }
