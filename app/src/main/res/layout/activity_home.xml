@@ -11,23 +11,34 @@
     tools:context="hangu.android.HomeActivity">
 
     <Button
-        android:text="List Web Apps"
+        android:text="CREATE Web App"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/btn_listWebApps"
+        android:id="@+id/btn_webApps"
         android:layout_alignParentEnd="true"
-        android:onClick="openListWebApps"/>
+        android:onClick="openWebApp"/>
+
+    <Button
+        android:text="List Web Apps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_listWebApps"
+        android:onClick="openListWebApps"
+        android:layout_below="@+id/btn_webApps"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:text="List Server Apps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:id="@+id/btn_listServerApps"
+        android:onClick="openListServerApps"
         android:layout_below="@+id/btn_listWebApps"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="21dp"
-        android:id="@+id/btn_listServerApps"
-        android:layout_alignParentEnd="true"
-        android:onClick="openListServerApps"/>
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

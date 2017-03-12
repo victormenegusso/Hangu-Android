@@ -22,4 +22,12 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ServerAppActivity.class);
         startActivity(intent);
     }
+
+    public void openWebApp(View view) {
+        Intent intent = new Intent(this, WebAppActivity.class);
+        startActivity(intent);
+    }
+
+
+
 }

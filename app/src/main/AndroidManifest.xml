@@ -30,9 +30,7 @@
            </intent-filter>
             -->
         </activity>
-
-        <activity android:name=".ListWebAppsActivity">
-        </activity>
+        <activity android:name=".ListWebAppsActivity"></activity>
         <activity android:name=".test.ProgressTestActivity">
 
             <!--
@@ -58,15 +56,16 @@
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <service android:name=".service.socket.ReaderLog" />
         <service android:name=".service.socket.ExecutorScript" />
         <service android:name=".service.HttpConnector" />
 
+        <activity android:name=".WebAppActivity"></activity>
     </application>
 
 </manifest>

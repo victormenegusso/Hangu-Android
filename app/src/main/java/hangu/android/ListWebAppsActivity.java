@@ -33,8 +33,10 @@ public class ListWebAppsActivity extends AppCompatActivity {
         //ListView  webAppsView = (ListView) findViewById(R.id.lista);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
 
-        WebAppDAO dao = new WebAppDAO();
+        WebAppDAO dao = new WebAppDAO(this);
+        dao.open();
         webApps = dao.list();
+        dao.close();
 
         listWebAppsAdapter = new ListWebAppsAdapter(webApps,this);
         recyclerView.setAdapter(listWebAppsAdapter);

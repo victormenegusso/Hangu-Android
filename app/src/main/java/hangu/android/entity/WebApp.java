@@ -5,12 +5,14 @@ package hangu.android.entity;
  */
 
 public class WebApp {
+    private int id;
     private String name;
     private String url;
     private String httpMethod;
     private Status status;
 
     public WebApp(){
+        this.status = Status.WAIT_CONNECTION;
     }
 
     public WebApp(String name, String url, String httpMethod) {
@@ -18,6 +20,15 @@ public class WebApp {
         this.url = url;
         this.httpMethod = httpMethod;
         this.status = Status.WAIT_CONNECTION;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
