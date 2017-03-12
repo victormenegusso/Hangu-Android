@@ -39,6 +39,6 @@ public class WebAppActivity extends AppCompatActivity {
         dao.open();
         dao.insert(webApp);
         dao.close();
-        
+
     }
 }

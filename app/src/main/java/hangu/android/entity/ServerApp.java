@@ -6,22 +6,23 @@ package hangu.android.entity;
 
 public class ServerApp {
 
+    private int id;
     private String name;
-    private String host;
-    private int port;
+    private String url;
     private String pathProcessStop;
     private String pathProcessStart;
+    private HanguSocket hanguSocket;
     private Status status;
 
     public ServerApp() {
     }
 
-    public ServerApp(String name, String host, int port, String pathProcessStop, String pathProcessStart) {
-        this.name = name;
-        this.host = host;
-        this.port = port;
-        this.pathProcessStop = pathProcessStop;
-        this.pathProcessStart = pathProcessStart;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -32,20 +33,12 @@ public class ServerApp {
         this.name = name;
     }
 
-    public String getHost() {
-        return host;
+    public String getUrl() {
+        return url;
     }
 
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getPathProcessStop() {
@@ -62,6 +55,14 @@ public class ServerApp {
 
     public void setPathProcessStart(String pathProcessStart) {
         this.pathProcessStart = pathProcessStart;
+    }
+
+    public HanguSocket getHanguSocket() {
+        return hanguSocket;
+    }
+
+    public void setHanguSocket(HanguSocket hanguSocket) {
+        this.hanguSocket = hanguSocket;
     }
 
     public Status getStatus() {

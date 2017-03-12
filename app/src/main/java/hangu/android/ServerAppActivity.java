@@ -34,30 +34,32 @@ public class ServerAppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server_app);
 
-        ServerAppDAO dao = new ServerAppDAO();
+        ServerAppDAO dao = new ServerAppDAO(this);
+        dao.open();
         serverApp = dao.list().get(0);
+        dao.close();
 
         txtViewName = (TextView) findViewById(R.id.txtView_name);
         txtViewURL = (TextView) findViewById(R.id.txtView_url);
 
         txtViewName.setText(serverApp.getName());
-        txtViewURL.setText(serverApp.getHost());
+        txtViewURL.setText(serverApp.getUrl());
 
         receiver = new InnerReceiver();
     }
 
     public void executeStart(View view){
         Intent intent = new Intent(this, ExecutorScript.class);
-        intent.putExtra(ExecutorScript.IN_SOCKET_HOST, "192.168.25.178");
-        intent.putExtra(ExecutorScript.IN_SOCKET_PORT,5000);
+        intent.putExtra(ExecutorScript.IN_SOCKET_HOST, serverApp.getHanguSocket().getHost());
+        intent.putExtra(ExecutorScript.IN_SOCKET_PORT, serverApp.getHanguSocket().getPort());
         intent.putExtra(ExecutorScript.IN_SCRIPT,serverApp.getPathProcessStart());
         startService(intent);
     }
 
     public void executeStop(View view){
         Intent intent = new Intent(this, ExecutorScript.class);
-        intent.putExtra(ExecutorScript.IN_SOCKET_HOST, "192.168.25.178");
-        intent.putExtra(ExecutorScript.IN_SOCKET_PORT,5000);
+        intent.putExtra(ExecutorScript.IN_SOCKET_HOST, serverApp.getHanguSocket().getHost());
+        intent.putExtra(ExecutorScript.IN_SOCKET_PORT, serverApp.getHanguSocket().getPort());
         intent.putExtra(ExecutorScript.IN_SCRIPT,serverApp.getPathProcessStop());
         startService(intent);
     }
