@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import hangu.android.dao.HanguSocketDAO;
 import hangu.android.dao.WebAppDAO;
 import hangu.android.entity.HanguSocket;
 import hangu.android.entity.WebApp;
@@ -27,13 +28,11 @@ public class HanguSocketActivity extends AppCompatActivity {
         HanguSocket hanguSocket = new HanguSocket();
         HanguSocketDAO dao = new HanguSocketDAO(this);
 
-        webApp.setName( editTextName.getText().toString() );
-        webApp.setUrl( editTextURL.getText().toString() );
-        webApp.setHttpMethod( editTextHttpMethod.getText().toString() );
-
+        hanguSocket.setHost( editTextHost.getText().toString() );
+        hanguSocket.setPort( Integer.parseInt( editTextPort.getText().toString() ) );
 
         dao.open();
-        dao.insert(webApp);
+        dao.insert(hanguSocket);
         dao.close();
 
     }

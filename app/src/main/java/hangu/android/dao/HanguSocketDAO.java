@@ -6,12 +6,9 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import hangu.android.entity.HanguSocket;
-import hangu.android.entity.WebApp;
 
 /**
  * Created by Victor Menegusso on 12/03/17.
@@ -24,11 +21,11 @@ public class HanguSocketDAO {
     private static final String COLUMN_NAME_HOST = "host";
     private static final String COLUMN_NAME_PORT = "port";
 
-    private DataBaseHelper dataBaseHelper;
+    private DBHelper dataBaseHelper;
     private SQLiteDatabase db;
 
     public HanguSocketDAO(Context context) {
-        this.dataBaseHelper = new DataBaseHelper(context);
+        this.dataBaseHelper = new DBHelper(context);
     }
 
     public void open () throws SQLException {
@@ -99,7 +96,15 @@ public class HanguSocketDAO {
         return hanguSocket ;
     }
 
+    public static String create() {
+        String sql = "CREATE TABLE " + TABLE_NAME + " (";
+        sql += COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
+        sql += COLUMN_NAME_HOST + " TEXT NOT NULL, ";
+        sql += COLUMN_NAME_PORT + " INTEGER NOT NULL)";
 
+        return sql;
+    }
+    /*
     private static class DataBaseHelper extends SQLiteOpenHelper {
 
         public DataBaseHelper(Context context) {
@@ -120,5 +125,5 @@ public class HanguSocketDAO {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         }
     }
-
+    */
 }

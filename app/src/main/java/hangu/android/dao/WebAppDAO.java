@@ -22,13 +22,13 @@ public class WebAppDAO {
     private static final String COLUMN_NAME_URL = "url";
     private static final String COLUMN_NAME_HTTP_METHOD = "http_method";
 
-    private DataBaseHelper dataBaseHelper;
+    private DBHelper dataBaseHelper;
     //private Context context;
     private SQLiteDatabase db;
 
     public WebAppDAO(Context context) {
         //this.context = context;
-        this.dataBaseHelper = new DataBaseHelper(context);
+        this.dataBaseHelper = new DBHelper(context);
     }
 
     public void open () throws SQLException {
@@ -84,7 +84,17 @@ public class WebAppDAO {
         return webApps ;
     }
 
+    public static String create() {
+        String sql = "CREATE TABLE " + TABLE_NAME + " (";
+        sql += COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
+        sql += COLUMN_NAME_NAME + " TEXT NOT NULL, ";
+        sql += COLUMN_NAME_URL + " TEXT NOT NULL, ";
+        sql += COLUMN_NAME_HTTP_METHOD + " TEXT NOT NULL)";
 
+        return sql;
+    }
+
+    /*
     private static class DataBaseHelper extends SQLiteOpenHelper {
 
         public DataBaseHelper(Context context) {
@@ -105,6 +115,6 @@ public class WebAppDAO {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         }
-    }
+    }*/
 
 }

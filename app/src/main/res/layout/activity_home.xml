@@ -21,6 +21,16 @@
         android:onClick="openWebApp"/>
 
     <Button
+        android:text="Create Server APP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_listWebApps"
+        android:layout_alignParentStart="true"
+        android:id="@+id/btn_ServerApp"
+        android:layout_alignParentEnd="true"
+        android:onClick="openServerApp" />
+
+    <Button
         android:text="List Web Apps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,17 +38,35 @@
         android:onClick="openListWebApps"
         android:layout_below="@+id/btn_webApps"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="31dp"
         android:layout_alignParentEnd="true" />
 
     <Button
         android:text="List Server Apps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="39dp"
         android:id="@+id/btn_listServerApps"
         android:onClick="openListServerApps"
-        android:layout_below="@+id/btn_listWebApps"
+        android:layout_below="@+id/btn_ServerApp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Create Hangu Socket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_listServerApps"
+        android:layout_alignParentStart="true"
+        android:id="@+id/btn_hanguSocket"
+        android:layout_alignParentEnd="true"
+        android:onClick="openHanguSocket" />
+
+    <Button
+        android:text="List Hangu Socket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_hanguSocket"
+        android:layout_alignParentStart="true"
+        android:id="@+id/btn_listHnaguSocket"
+        android:layout_alignParentEnd="true"
+        android:onClick="openListHanguSockets" />
 </RelativeLayout>

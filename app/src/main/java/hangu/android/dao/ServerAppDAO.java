@@ -24,13 +24,13 @@ public class ServerAppDAO {
     private static final String COLUMN_NAME_PATH_PROCESS_STOP = "path_process_stop";
     private static final String COLUMN_NAME_HANGU_SOCKET_ID = "hangu_socket_id";
 
-    private DataBaseHelper dataBaseHelper;
+    private DBHelper dataBaseHelper;
     private Context context;
     private SQLiteDatabase db;
 
     public ServerAppDAO(Context context) {
         this.context = context;
-        this.dataBaseHelper = new DataBaseHelper(context);
+        this.dataBaseHelper = new DBHelper(context);
     }
 
     public void open () throws SQLException {
@@ -97,7 +97,18 @@ public class ServerAppDAO {
         return serverApps ;
     }
 
+    public static String create() {
+        String sql = "CREATE TABLE " + TABLE_NAME + " (";
+        sql += COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
+        sql += COLUMN_NAME_NAME + " TEXT NOT NULL, ";
+        sql += COLUMN_NAME_URL + " TEXT NOT NULL, ";
+        sql += COLUMN_NAME_PATH_PROCESS_START + " TEXT NOT NULL, ";
+        sql += COLUMN_NAME_PATH_PROCESS_STOP + " TEXT NOT NULL, ";
+        sql += COLUMN_NAME_HANGU_SOCKET_ID + " INTEGER NOT NULL)";
 
+        return sql;
+    }
+    /*
     private static class DataBaseHelper extends SQLiteOpenHelper {
 
         public DataBaseHelper(Context context) {
@@ -120,7 +131,8 @@ public class ServerAppDAO {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         }
-    }
+
+    }*/
 }
 
 
