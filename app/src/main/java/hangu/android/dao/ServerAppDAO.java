@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 import hangu.android.entity.ServerApp;
@@ -108,53 +107,4 @@ public class ServerAppDAO {
 
         return sql;
     }
-    /*
-    private static class DataBaseHelper extends SQLiteOpenHelper {
-
-        public DataBaseHelper(Context context) {
-            super(context, ConstantsDAO.DATABASE_NAME, null, ConstantsDAO.DATABASE_VERSION);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            String sql = "CREATE TABLE " + TABLE_NAME + " (";
-            sql += COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
-            sql += COLUMN_NAME_NAME + " TEXT NOT NULL, ";
-            sql += COLUMN_NAME_URL + " TEXT NOT NULL, ";
-            sql += COLUMN_NAME_PATH_PROCESS_START + " TEXT NOT NULL, ";
-            sql += COLUMN_NAME_PATH_PROCESS_STOP + " TEXT NOT NULL, ";
-            sql += COLUMN_NAME_HANGU_SOCKET_ID + " INTEGER NOT NULL)";
-
-            db.execSQL(sql);
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        }
-
-    }*/
 }
-
-
-/**
- public List<ServerApp> list(){
- List<ServerApp> serverApps = new ArrayList<>();
-
- serverApps.add( new ServerApp("tomcat","192.168.25.178",8080,"/home/victor/Downloads/apache-tomcat-8.5.11/bin/shutdown.sh","/home/victor/Downloads/apache-tomcat-8.5.11/bin/startup.sh") );
-
- /*
- webApps.add( new WebApp("teste 2","192.168.1.181","get") );
- webApps.add( new WebApp("teste 3","192.168.1.182","get") );
- webApps.add( new WebApp("teste 4","192.168.1.183","get") );
- webApps.add( new WebApp("teste 5","192.168.1.184","get") );
- webApps.add( new WebApp("teste 6","192.168.1.185","get") );
-
- webApps.add( new WebApp("gizmodo","www.gizmodo.com.br","get") );
- webApps.add( new WebApp("omgubuntu","www.omgubuntu.com","get") );
- webApps.add( new WebApp("pucpr","www.pucpr.br","get") );
- */
-/*
-return serverApps;
-        }
-
-*/

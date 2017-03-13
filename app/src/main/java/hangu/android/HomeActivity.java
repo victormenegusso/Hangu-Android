@@ -42,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void openListHanguSockets(View view) {
-        //Intent intent = new Intent(this, ListWebAppsActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, ListHanguSocketsActivity.class);
+        startActivity(intent);
     }
 }

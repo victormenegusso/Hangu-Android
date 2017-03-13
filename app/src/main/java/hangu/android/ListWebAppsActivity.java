@@ -54,11 +54,11 @@ public class ListWebAppsActivity extends AppCompatActivity {
             startService(intent);
         }
 
-        //ArrayAdapter<WebApp> adapter = new ArrayAdapter<WebApp>(this,
+        //ArrayAdapter<WebApp> activity_list_web_apps_adapter = new ArrayAdapter<WebApp>(this,
         //        android.R.layout.simple_list_item_1, webApps);
-        // MyAdapter adapter = new MyAdapter(webApps,this);
+        // MyAdapter activity_list_web_apps_adapter = new MyAdapter(webApps,this);
 
-        //webAppsView.setAdapter(adapter);
+        //webAppsView.setAdapter(activity_list_web_apps_adapter);
 
 
     }

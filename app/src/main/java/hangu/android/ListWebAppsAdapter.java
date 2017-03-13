@@ -27,9 +27,8 @@ public class ListWebAppsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
-        //return null;
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.adapter, parent, false);
+                .inflate(R.layout.activity_list_web_apps_adapter, parent, false);
 
         ListWebAppsViewHolder holder = new ListWebAppsViewHolder(view);
 
@@ -52,8 +51,5 @@ public class ListWebAppsAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return webApps.size();
-    }
-    public void btnClick(View v){
-        Log.d("aa","ccc");
     }
 }

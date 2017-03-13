@@ -10,49 +10,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
-        <activity android:name=".SocketReaderLog">
-
-            <!--
-           <intent-filter>
-               <action android:name="android.intent.action.MAIN" />
-
-               <category android:name="android.intent.category.LAUNCHER" />
-           </intent-filter>
-            -->
-        </activity>
+        <activity android:name=".SocketReaderLog" />
         <activity android:name=".ListWebAppsActivity" />
-        <activity android:name=".test.ProgressTestActivity">
-
-            <!--
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
-            -->
-        </activity>
-        <activity android:name=".test.ReadWebpageAsyncTaskActivity">
-
-            <!--
-                 <intent-filter>
-                     <action android:name="android.intent.action.MAIN" />
-
-                     <category android:name="android.intent.category.LAUNCHER" />
-                 </intent-filter>
-            -->
-
-        </activity>
         <activity android:name=".ServerAppActivity" />
+        <activity android:name=".WebAppActivity" />
+        <activity android:name=".HanguSocketActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,8 +27,7 @@
         <service android:name=".service.socket.ExecutorScript" />
         <service android:name=".service.HttpConnector" />
 
-        <activity android:name=".WebAppActivity" />
-        <activity android:name=".HanguSocketActivity"></activity>
+        <activity android:name=".ListHanguSocketsActivity"></activity>
     </application>
 
 </manifest>

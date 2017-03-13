@@ -15,7 +15,7 @@ public class DBHelper  extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "hangu.db";
 
     public DBHelper(Context context) {
-        super(context, ConstantsDAO.DATABASE_NAME, null, ConstantsDAO.DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
