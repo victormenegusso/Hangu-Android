@@ -26,12 +26,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void openServerApp(View view) {
-        //Intent intent = new Intent(this, ServerAppActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, PersistServerAppActivity.class);
+        startActivity(intent);
     }
 
     public void openListServerApps(View view) {
-        Intent intent = new Intent(this, ServerAppActivity.class);
+        Intent intent = new Intent(this, ListServerAppsActivity.class);
         startActivity(intent);
     }
 

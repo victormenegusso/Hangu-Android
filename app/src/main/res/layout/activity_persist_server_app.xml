@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_persist_server_app"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="hangu.android.PersistServerAppActivity">
+
+    <!-- NAME -->
+    <TextView
+        android:text="NAME"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView_name"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Name"
+        android:ems="10"
+        android:layout_below="@+id/textView_name"
+        android:layout_alignParentStart="true"
+        android:id="@+id/editText_name"
+        android:layout_alignParentEnd="true" />
+
+
+    <!-- URL -->
+    <TextView
+        android:text="URL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/editText_name"
+        android:id="@+id/textView_url"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="URL"
+        android:ems="10"
+        android:layout_below="@+id/textView_url"
+        android:layout_alignParentStart="true"
+        android:id="@+id/editText_url"
+        android:layout_alignParentEnd="true" />
+
+
+    <!-- SCRIPT START -->
+    <TextView
+        android:text="Script Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/editText_url"
+        android:id="@+id/textView_scriptStart"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="SCRIPT START"
+        android:ems="10"
+        android:layout_below="@+id/textView_scriptStart"
+        android:layout_alignParentStart="true"
+        android:id="@+id/editText_scriptStart"
+        android:layout_alignParentEnd="true" />
+
+
+    <!-- SCRIPT STOP -->
+    <TextView
+        android:text="Script Stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/editText_scriptStart"
+        android:id="@+id/textView_scriptStop"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="SCRIPT STOP"
+        android:ems="10"
+        android:layout_below="@+id/textView_scriptStop"
+        android:layout_alignParentStart="true"
+        android:id="@+id/editText_scriptStop"
+        android:layout_alignParentEnd="true" />
+
+    <!-- HANGU SOCKET -->
+    <TextView
+        android:text="Hangu Socket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_below="@+id/editText_scriptStop"
+        android:id="@+id/textView_hanguSocket"
+        android:layout_alignParentEnd="true" />
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_below="@+id/textView_hanguSocket"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/spinner_hanguSocket" />
+
+    <!-- BUTTON -->
+    <Button
+        android:text="Save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner_hanguSocket"
+        android:id="@+id/btn"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="save"/>
+
+</RelativeLayout>

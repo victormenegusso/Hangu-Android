@@ -27,7 +27,9 @@
         <service android:name=".service.socket.ExecutorScript" />
         <service android:name=".service.HttpConnector" />
 
-        <activity android:name=".ListHanguSocketsActivity"></activity>
+        <activity android:name=".ListHanguSocketsActivity" />
+        <activity android:name=".PersistServerAppActivity" />
+        <activity android:name=".ListServerAppsActivity"></activity>
     </application>
 
 </manifest>
