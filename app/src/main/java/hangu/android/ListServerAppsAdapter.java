@@ -2,6 +2,7 @@ package hangu.android;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import hangu.android.entity.ServerApp;
  * Created by Victor Menegusso on 14/03/17.
  */
 
-public class ListServerAppsAdapter   extends RecyclerView.Adapter {
+public class ListServerAppsAdapter extends RecyclerView.Adapter {
 
     private List<ServerApp> serverApps;
     private Context context;
@@ -42,11 +43,16 @@ public class ListServerAppsAdapter   extends RecyclerView.Adapter {
 
         holder.name.setText(serverApp.getName());
         holder.url.setText(serverApp.getUrl());
+        holder.serverApp = serverApp;
+        holder.context = context;
     }
 
     @Override
     public int getItemCount() {
         return serverApps.size();
     }
+
+
+
 }
 
