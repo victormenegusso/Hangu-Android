@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.Serializable;
+
 import hangu.android.entity.ServerApp;
 
 /**
@@ -28,14 +30,8 @@ public class ListServerAppsViewHolder extends RecyclerView.ViewHolder{
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("asd","itemView");
-                Log.d("asd",""+serverApp.getId());
-                Log.d("asd",serverApp.getName());
-                Log.d("asd",serverApp.getPathProcessStart());
-                Log.d("asd",serverApp.getPathProcessStop());
-                Log.d("asd",serverApp.getUrl());
-
                 Intent intent = new Intent(context,ServerAppActivity.class);
+                intent.putExtra(ServerAppActivity.IN_SERVER_APP,(Serializable) serverApp);
                 context.startActivity(intent);
             }
         });

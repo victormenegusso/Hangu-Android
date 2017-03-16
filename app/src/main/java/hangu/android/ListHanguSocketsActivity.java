@@ -1,6 +1,5 @@
 package hangu.android;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,8 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import java.util.List;
 import hangu.android.dao.HanguSocketDAO;
 import hangu.android.entity.HanguSocket;
-import hangu.android.entity.WebApp;
-import hangu.android.service.HttpConnector;
 
 public class ListHanguSocketsActivity extends AppCompatActivity {
 
@@ -44,6 +41,4 @@ public class ListHanguSocketsActivity extends AppCompatActivity {
         super.onPause();
 
     }
-
-
 }

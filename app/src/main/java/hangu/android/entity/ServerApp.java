@@ -1,10 +1,12 @@
 package hangu.android.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Victor Menegusso on 11/03/17.
  */
 
-public class ServerApp {
+public class ServerApp implements Serializable{
 
     private int id;
     private String name;

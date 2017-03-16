@@ -26,8 +26,7 @@ public class ListHanguSocketsAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.activity_list_hangu_sockets_adapter, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_list_hangu_sockets_adapter, parent, false);
 
         ListHanguSocketsViewHolder holder = new ListHanguSocketsViewHolder(view);
 
@@ -43,6 +42,8 @@ public class ListHanguSocketsAdapter extends RecyclerView.Adapter {
 
         holder.host.setText(hanguSocket.getHost());
         holder.port.setText(Integer.toString(hanguSocket.getPort()));
+        holder.hanguSocket = hanguSocket;
+        holder.context = context;
     }
 
     @Override

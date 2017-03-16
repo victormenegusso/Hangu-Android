@@ -19,6 +19,7 @@ import hangu.android.entity.HanguSocket;
 import hangu.android.entity.ServerApp;
 
 public class PersistServerAppActivity extends AppCompatActivity {
+    public static final String IN_SERVER_APP = "IN_SERVER_APP";
 
     private EditText editTextName;
     private EditText editTextURL;
@@ -26,22 +27,43 @@ public class PersistServerAppActivity extends AppCompatActivity {
     private EditText editTextScriptStop;
     private Spinner spinnerHanguSocket;
 
+    private ServerApp serverApp;
+
     private Map<Integer, Integer> spinnerMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persist_server_app);
 
+        bindInterface();
+        getExtras();
+        loadInterface();
+    }
+
+    private void getExtras(){
+        serverApp = (ServerApp) getIntent().getSerializableExtra(IN_SERVER_APP);
+    }
+
+    private void bindInterface(){
         editTextName = (EditText) findViewById(R.id.editText_name);
         editTextURL = (EditText) findViewById(R.id.editText_url);
         editTextScriptStart = (EditText) findViewById(R.id.editText_scriptStart);
         editTextScriptStop = (EditText) findViewById(R.id.editText_scriptStop);
         spinnerHanguSocket = (Spinner) findViewById(R.id.spinner_hanguSocket);
+    }
+
+    private void loadInterface(){
+        if(serverApp != null) {
+            editTextName.setText(serverApp.getName());
+            editTextURL.setText(serverApp.getName());
+            editTextScriptStart.setText(serverApp.getName());
+            editTextScriptStop.setText(serverApp.getName());
+        }
 
         initSpinnerHanguSocket();
     }
 
-    public void initSpinnerHanguSocket() {
+    private void initSpinnerHanguSocket() {
 
         HanguSocketDAO dao = new HanguSocketDAO(this);
         dao.open();
@@ -62,19 +84,27 @@ public class PersistServerAppActivity extends AppCompatActivity {
     }
 
     public void save(View v){
-        ServerApp server = new ServerApp();
         ServerAppDAO dao = new ServerAppDAO(this);
+        boolean isInsert = false;
 
-        server.setName( editTextName.getText().toString() );
-        server.setUrl( editTextURL.getText().toString() );
-        server.setPathProcessStart( editTextScriptStart.getText().toString() );
-        server.setPathProcessStop( editTextScriptStop.getText().toString() );
+        if(serverApp == null){
+            serverApp = new ServerApp();
+            isInsert = true;
+        }
 
-        server.setHanguSocket( new HanguSocket() );
-        server.getHanguSocket().setId( spinnerMap.get( spinnerHanguSocket.getSelectedItemPosition() ) );
+        serverApp.setName( editTextName.getText().toString() );
+        serverApp.setUrl( editTextURL.getText().toString() );
+        serverApp.setPathProcessStart( editTextScriptStart.getText().toString() );
+        serverApp.setPathProcessStop( editTextScriptStop.getText().toString() );
+
+        serverApp.setHanguSocket( new HanguSocket() );
+        serverApp.getHanguSocket().setId( spinnerMap.get( spinnerHanguSocket.getSelectedItemPosition() ) );
         
         dao.open();
-        dao.insert(server);
+        if(isInsert)
+            dao.insert(serverApp);
+        else
+            dao.update(serverApp);
         dao.close();
 
     }

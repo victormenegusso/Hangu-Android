@@ -16,18 +16,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/textView_host"
+        android:id="@+id/textView_label_host"
         android:layout_alignParentEnd="true" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="Host"
         android:ems="10"
-        android:layout_below="@+id/textView_host"
+        android:layout_below="@+id/textView_label_host"
         android:layout_alignParentStart="true"
-        android:id="@+id/editText_host"
+        android:id="@+id/textView_host"
         android:layout_alignParentEnd="true" />
 
 
@@ -39,29 +39,29 @@
         android:layout_alignParentStart="true"
         android:ems="10"
         android:inputType="number"
-        android:layout_below="@+id/editText_host"
-        android:id="@+id/textView_port"
+        android:layout_below="@+id/textView_host"
+        android:id="@+id/textView_label_port"
         android:layout_alignParentEnd="true" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="5000"
         android:ems="10"
-        android:layout_below="@+id/textView_port"
+        android:layout_below="@+id/textView_label_port"
         android:layout_alignParentStart="true"
-        android:id="@+id/editText_port"
+        android:id="@+id/textView_port"
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="Save"
+        android:text="Edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText_port"
+        android:layout_below="@+id/textView_port"
         android:id="@+id/btn"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:onClick="save"/>
+        android:onClick="edit"/>
 
 </RelativeLayout>

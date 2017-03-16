@@ -1,39 +1,50 @@
 package hangu.android;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 
-import hangu.android.dao.HanguSocketDAO;
-import hangu.android.dao.WebAppDAO;
+import java.io.Serializable;
+
 import hangu.android.entity.HanguSocket;
-import hangu.android.entity.WebApp;
 
 public class HanguSocketActivity extends AppCompatActivity {
 
-    private EditText editTextHost;
-    private EditText editTextPort;
+    public static final String IN_HANGU_SOCKET = "IN_HANGU_SOCKET";
+
+    private TextView textView_host;
+    private TextView textView_port;
+    private HanguSocket hanguSocket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hangu_socket);
 
-        editTextHost = (EditText) findViewById( R.id.editText_host );
-        editTextPort = (EditText) findViewById( R.id.editText_port );
+        bindInterface();
+        getExtras();
+        loadInterface();
     }
 
-    public void save(View v){
-        HanguSocket hanguSocket = new HanguSocket();
-        HanguSocketDAO dao = new HanguSocketDAO(this);
+    private void getExtras(){
+        hanguSocket = (HanguSocket) getIntent().getSerializableExtra(IN_HANGU_SOCKET);
+    }
 
-        hanguSocket.setHost( editTextHost.getText().toString() );
-        hanguSocket.setPort( Integer.parseInt( editTextPort.getText().toString() ) );
+    private void bindInterface(){
+        textView_host = (TextView)findViewById( R.id.textView_host );
+        textView_port = (TextView)findViewById( R.id.textView_port );
+    }
 
-        dao.open();
-        dao.insert(hanguSocket);
-        dao.close();
+    private void loadInterface(){
+        textView_host.setText( hanguSocket.getHost() );
+        textView_port.setText( Integer.toString( hanguSocket.getPort() ) );
+    }
 
+    public void edit(View v){
+        Intent intent = new Intent(this,PersistHanguSocketActivity.class);
+        intent.putExtra(PersistHanguSocketActivity.IN_HANGU_SOCKET,(Serializable) hanguSocket);
+        startActivity(intent);
     }
 }

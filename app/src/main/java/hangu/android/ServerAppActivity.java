@@ -13,17 +13,20 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.util.concurrent.Executor;
 
 import hangu.android.dao.ServerAppDAO;
+import hangu.android.entity.HanguSocket;
 import hangu.android.entity.ServerApp;
 import hangu.android.service.socket.ExecutorScript;
 import hangu.android.service.socket.ReaderLog;
 
 public class ServerAppActivity extends AppCompatActivity {
 
-    private ServerApp serverApp;
+    public static final String IN_SERVER_APP = "IN_SERVER_APP";
 
+    private ServerApp serverApp;
     private InnerReceiver receiver = null;
 
     private TextView txtViewName;
@@ -34,18 +37,41 @@ public class ServerAppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server_app);
 
-        ServerAppDAO dao = new ServerAppDAO(this);
-        dao.open();
-        serverApp = dao.list().get(0);
-        dao.close();
-
-        txtViewName = (TextView) findViewById(R.id.txtView_name);
-        txtViewURL = (TextView) findViewById(R.id.txtView_url);
-
-        txtViewName.setText(serverApp.getName());
-        txtViewURL.setText(serverApp.getUrl());
+        bindInterface();
+        getExtras();
+        loadInterface();
 
         receiver = new InnerReceiver();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("ServerAppActivity","onResume");
+
+        IntentFilter filter = new IntentFilter(ExecutorScript.ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("ServerAppActivity","onPause");
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    private void getExtras(){
+        serverApp = (ServerApp) getIntent().getSerializableExtra(IN_SERVER_APP);
+    }
+
+    private void bindInterface(){
+        txtViewName = (TextView) findViewById(R.id.txtView_name);
+        txtViewURL = (TextView) findViewById(R.id.txtView_url);
+    }
+
+    private void loadInterface(){
+        txtViewName.setText(serverApp.getName());
+        txtViewURL.setText(serverApp.getUrl());
     }
 
     public void executeStart(View view){
@@ -64,26 +90,16 @@ public class ServerAppActivity extends AppCompatActivity {
         startService(intent);
     }
 
-    public void openSocketReaderLog(View view){
-        Log.d("ServerAppActivity","openSocketReaderLog");
+    public void openSocketReaderLog(View view) {
+        Log.d("ServerAppActivity", "openSocketReaderLog");
         Intent intent = new Intent(this, SocketReaderLog.class);
         startActivity(intent);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("ServerAppActivity","onResume");
-
-        IntentFilter filter = new IntentFilter(ExecutorScript.ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("ServerAppActivity","onPause");
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    public void edit(View view){
+        Intent intent = new Intent(this, PersistServerAppActivity.class);
+        intent.putExtra(PersistServerAppActivity.IN_SERVER_APP,(Serializable)serverApp);
+        startActivity(intent);
     }
 
     private class InnerReceiver extends BroadcastReceiver {

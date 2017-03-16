@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import hangu.android.entity.HanguSocket;
-
 public class HomeActivity extends AppCompatActivity {
 
     @Override
@@ -37,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void openHanguSocket(View view) {
-        Intent intent = new Intent(this, HanguSocketActivity.class);
+        Intent intent = new Intent(this, PersistHanguSocketActivity.class);
         startActivity(intent);
     }
 

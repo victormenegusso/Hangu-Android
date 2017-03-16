@@ -1,9 +1,11 @@
 package hangu.android.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Victor Menegusso on 12/03/17.
  */
-public class HanguSocket {
+public class HanguSocket implements Serializable{
     private int id;
     private String host;
     private int port;

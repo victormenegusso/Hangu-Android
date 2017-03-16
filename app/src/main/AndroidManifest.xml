@@ -14,7 +14,7 @@
         <activity android:name=".ListWebAppsActivity" />
         <activity android:name=".ServerAppActivity" />
         <activity android:name=".WebAppActivity" />
-        <activity android:name=".HanguSocketActivity" />
+        <activity android:name=".PersistHanguSocketActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +30,7 @@
         <activity android:name=".ListHanguSocketsActivity" />
         <activity android:name=".PersistServerAppActivity" />
         <activity android:name=".ListServerAppsActivity" />
+        <activity android:name=".HanguSocketActivity"></activity>
     </application>
 
 </manifest>
