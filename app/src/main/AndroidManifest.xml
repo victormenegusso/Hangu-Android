@@ -13,17 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SocketReaderLog" />
-        <activity android:name=".ListWebAppsActivity" />
         <activity android:name=".ServerAppActivity" />
-        <activity android:name=".WebAppActivity" />
+        <activity android:name=".PersistWebAppActivity" />
         <activity android:name=".PersistHanguSocketActivity" />
-        <activity android:name=".ListHanguSocketsActivity" />
         <activity android:name=".PersistServerAppActivity" />
+        <activity android:name=".ListHanguSocketsActivity" />
+        <activity android:name=".ListWebAppsActivity" />
         <activity android:name=".ListServerAppsActivity" />
         <activity android:name=".HanguSocketActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,7 +41,7 @@
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-
+        <activity android:name=".WebAppActivity"></activity>
     </application>
 
 </manifest>

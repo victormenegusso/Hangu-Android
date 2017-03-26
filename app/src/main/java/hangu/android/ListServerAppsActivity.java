@@ -1,5 +1,6 @@
 package hangu.android;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +14,11 @@ import hangu.android.dao.HanguSocketDAO;
 import hangu.android.dao.ServerAppDAO;
 import hangu.android.entity.HanguSocket;
 import hangu.android.entity.ServerApp;
+import hangu.android.entity.WebApp;
 
 public class ListServerAppsActivity extends AppCompatActivity {
+
+    public final int REQUEST_UPDATE_LIST = 1;
 
     private ListServerAppsAdapter listServerAppsAdapter;
     private List<ServerApp> serverApps;
@@ -46,5 +50,12 @@ public class ListServerAppsActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_UPDATE_LIST){
+        }
     }
 }

@@ -10,17 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.io.Serializable;
-import java.util.concurrent.Executor;
-
-import hangu.android.dao.ServerAppDAO;
-import hangu.android.entity.HanguSocket;
 import hangu.android.entity.ServerApp;
 import hangu.android.service.socket.ExecutorScript;
-import hangu.android.service.socket.ReaderLog;
 
 public class ServerAppActivity extends AppCompatActivity {
 
@@ -47,7 +39,7 @@ public class ServerAppActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("ServerAppActivity","onResume");
+        Log.d("ServerAppActivity", "onResume");
 
         IntentFilter filter = new IntentFilter(ExecutorScript.ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
@@ -56,37 +48,37 @@ public class ServerAppActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("ServerAppActivity","onPause");
+        Log.d("ServerAppActivity", "onPause");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
-    private void getExtras(){
+    private void getExtras() {
         serverApp = (ServerApp) getIntent().getSerializableExtra(IN_SERVER_APP);
     }
 
-    private void bindInterface(){
+    private void bindInterface() {
         txtViewName = (TextView) findViewById(R.id.txtView_name);
         txtViewURL = (TextView) findViewById(R.id.txtView_url);
     }
 
-    private void loadInterface(){
+    private void loadInterface() {
         txtViewName.setText(serverApp.getName());
         txtViewURL.setText(serverApp.getUrl());
     }
 
-    public void executeStart(View view){
+    public void executeStart(View view) {
         Intent intent = new Intent(this, ExecutorScript.class);
         intent.putExtra(ExecutorScript.IN_SOCKET_HOST, serverApp.getHanguSocket().getHost());
         intent.putExtra(ExecutorScript.IN_SOCKET_PORT, serverApp.getHanguSocket().getPort());
-        intent.putExtra(ExecutorScript.IN_SCRIPT,serverApp.getPathProcessStart());
+        intent.putExtra(ExecutorScript.IN_SCRIPT, serverApp.getPathProcessStart());
         startService(intent);
     }
 
-    public void executeStop(View view){
+    public void executeStop(View view) {
         Intent intent = new Intent(this, ExecutorScript.class);
         intent.putExtra(ExecutorScript.IN_SOCKET_HOST, serverApp.getHanguSocket().getHost());
         intent.putExtra(ExecutorScript.IN_SOCKET_PORT, serverApp.getHanguSocket().getPort());
-        intent.putExtra(ExecutorScript.IN_SCRIPT,serverApp.getPathProcessStop());
+        intent.putExtra(ExecutorScript.IN_SCRIPT, serverApp.getPathProcessStop());
         startService(intent);
     }
 
@@ -96,9 +88,9 @@ public class ServerAppActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void edit(View view){
+    public void edit(View view) {
         Intent intent = new Intent(this, PersistServerAppActivity.class);
-        intent.putExtra(PersistServerAppActivity.IN_SERVER_APP,(Serializable)serverApp);
+        intent.putExtra(PersistServerAppActivity.IN_SERVER_APP, (Serializable) serverApp);
         startActivity(intent);
     }
 

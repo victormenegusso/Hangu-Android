@@ -1,14 +1,15 @@
 package hangu.android.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Victor Menegusso on 07/03/17.
- *
+ * <p>
  * status -> Indicates the status of the application
  * checkInPeriod ->  Is the check period, if the value is 0 does not have automatic check.
- *
  */
 
-public class WebApp {
+public class WebApp implements Serializable {
     private int id;
     private String name;
     private String url;
@@ -16,7 +17,7 @@ public class WebApp {
     private Status status;
     private long checkInPeriod; //
 
-    public WebApp(){
+    public WebApp() {
         this.status = Status.WAIT_CONNECTION;
         checkInPeriod = 0;
     }

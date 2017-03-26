@@ -1,105 +1,130 @@
 package hangu.android;
 
-import android.support.design.widget.TextInputEditText;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.List;
+import java.io.Serializable;
 
+import hangu.android.core.SchedulerCheck;
 import hangu.android.dao.WebAppDAO;
 import hangu.android.entity.WebApp;
 
 public class WebAppActivity extends AppCompatActivity {
 
-    private EditText editTextName;
-    private EditText editTextURL;
-    private Spinner spinnerHttpMethod;
-    private Spinner spinnerPeriod;
+    public static final String IN_WEB_APP = "IN_WEB_APP";
+    public static final String IN_WEB_APP_ID = "IN_WEB_APP_ID";
+    public static final String OUT_WEB_APP = "OUT_WEB_APP";
+    public static final String OUT_WEB_APP_ID = "OUT_WEB_APP_ID";
 
+    public static final int RESULT_DELETE_OK = 2;
+    public static final int RESULT_EDIT_OK = 3;
+    public static final int REQUEST_EDIT = 1;
+
+    private boolean hasEdit;
+
+    private TextView textViewName;
+    private TextView textViewURL;
+    private TextView textViewHttpMethod;
+    private TextView textViewCheck;
+
+    private WebApp webApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web_app);
+        setContentView(R.layout.activity_web_app_main);
+
+        hasEdit = false;
+
+        getExtras();
         bindInterface();
         loadInterface();
     }
 
-    private void bindInterface(){
-        editTextName = (EditText) findViewById( R.id.editText_name );
-        editTextURL = (EditText) findViewById( R.id.editText_url );
-        spinnerHttpMethod = (Spinner) findViewById( R.id.editText_http_method );
-        spinnerPeriod = (Spinner) findViewById( R.id.spinner_period );
-    }
+    private void getExtras() {
 
-    private void loadInterface(){
-        initSpinnerHttpMethod();
-        initSpinnerPeriod();
-    }
-
-    private void initSpinnerHttpMethod() {
-        String[] spinnerArray = new String[2];
-
-        spinnerArray[0] = "GET";
-        spinnerArray[1] = "HEAD";
-
-        ArrayAdapter<String> adapter =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerHttpMethod.setAdapter(adapter);
-        spinnerHttpMethod.setSelection(0);
-    }
-
-    private void initSpinnerPeriod() {
-        String[] spinnerArray = new String[6];
-
-        spinnerArray[0] = "-";
-        spinnerArray[1] = "10 s";
-        spinnerArray[2] = "30 s";
-        spinnerArray[3] = "1 min";
-        spinnerArray[4] = "5 min";
-        spinnerArray[5] = "30 min";
-
-        ArrayAdapter<String> adapter =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPeriod.setAdapter(adapter);
-        spinnerPeriod.setSelection(0);
-    }
-
-    private long getSpinnerPeriodValue(){
-        int ind = spinnerPeriod.getSelectedItemPosition();
-        switch (ind){
-            case 0 : return 0;
-            case 1 : return 10000;
-            case 2 : return 30000;
-            case 3 : return 60000;
-            case 4 : return 300000;
-            case 5 : return 1800000;
+        if (getIntent().getSerializableExtra(IN_WEB_APP) != null) {
+            webApp = (WebApp) getIntent().getSerializableExtra(IN_WEB_APP);
+        } else {
+            int id = (int) getIntent().getSerializableExtra(IN_WEB_APP_ID);
+            Log.d("WebAppActivity",""+id);
+            WebAppDAO dao = new WebAppDAO(this);
+            dao.open();
+            webApp = dao.get(id);
+            dao.close();
         }
-        return 0;
     }
 
+    private void bindInterface() {
+        textViewName = (TextView) findViewById(R.id.textView_name);
+        textViewURL = (TextView) findViewById(R.id.textView_url);
+        textViewHttpMethod = (TextView) findViewById(R.id.textView_httpMethod);
+        textViewCheck = (TextView) findViewById(R.id.textView_check);
+    }
 
-    public void save(View v){
-        WebApp webApp = new WebApp();
+    private void loadInterface() {
+        textViewName.setText(webApp.getName());
+        textViewURL.setText(webApp.getUrl());
+        textViewHttpMethod.setText(webApp.getHttpMethod());
+        textViewCheck.setText(Long.toString(webApp.getCheckInPeriod()));
+    }
+
+    public void edit(View view) {
+        Intent intent = new Intent(this, PersistWebAppActivity.class);
+        intent.putExtra(PersistWebAppActivity.IN_WEB_APP, (Serializable) webApp);
+        //startActivity(intent);
+        startActivityForResult(intent,REQUEST_EDIT);
+    }
+
+    public void delete(View view) {
         WebAppDAO dao = new WebAppDAO(this);
 
-        webApp.setName( editTextName.getText().toString() );
-        webApp.setUrl( editTextURL.getText().toString() );
-
-        webApp.setHttpMethod( spinnerHttpMethod.getSelectedItem().toString() );
-        webApp.setCheckInPeriod( getSpinnerPeriodValue() );
-
         dao.open();
-        dao.insert(webApp);
+        dao.remove(webApp.getId());
         dao.close();
 
+        SchedulerCheck.getScheduler().cancelScheduleWebApp(this,webApp.getId());
+
+        //
+        Intent it = new Intent();
+        it.putExtra(OUT_WEB_APP_ID, webApp.getId());
+
+        setResult(RESULT_DELETE_OK, it);
 
         finish();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_EDIT && resultCode == PersistWebAppActivity.RESULT_EDIT_OK){
+            hasEdit = true;
+
+            webApp = (WebApp) data.getSerializableExtra( PersistWebAppActivity.OUT_WEB_APP );
+            loadInterface();
+        }
+    }
+
+    public void onBackPressed(){
+        super.onBackPressed();
+        Log.d("teste","onBackPressed");
+        if( hasEdit ){
+            Intent it = new Intent();
+            it.putExtra(OUT_WEB_APP, webApp);
+
+            setResult(RESULT_OK, it);
+        }
+    }
+
+
+    @Override
+    public void finish() {
+        super.finish();
+        Log.d("teste","finish");
+    }
+
 }

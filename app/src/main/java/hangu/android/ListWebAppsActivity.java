@@ -22,6 +22,8 @@ import hangu.android.service.HttpConnector;
  */
 public class ListWebAppsActivity extends AppCompatActivity {
 
+    public static final int REQUEST_UPDATE_LIST = 1;
+
     private InnerReceiver receiver = null;
     private ListWebAppsAdapter listWebAppsAdapter;
     private List<WebApp> webApps;
@@ -46,28 +48,13 @@ public class ListWebAppsActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(layout);
 
-
         receiver = new InnerReceiver();
         for( WebApp webApp : webApps){
             Intent intent = new Intent(this, HttpConnector.class);
             intent.putExtra(HttpConnector.IN_URL,webApp.getUrl());
             startService(intent);
         }
-
-        //ArrayAdapter<WebApp> activity_list_web_apps_adapter = new ArrayAdapter<WebApp>(this,
-        //        android.R.layout.simple_list_item_1, webApps);
-        // MyAdapter activity_list_web_apps_adapter = new MyAdapter(webApps,this);
-
-        //webAppsView.setAdapter(activity_list_web_apps_adapter);
-
-
     }
-    public void btnClick(View v){
-        Log.d("aa","xxxx");
-
-        Log.d("aa",v.getClass().toString());
-    }
-
 
     @Override
     protected void onResume() {
@@ -83,6 +70,22 @@ public class ListWebAppsActivity extends AppCompatActivity {
         super.onPause();
         Log.d("tail","onPause");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("LIST","onActivityResult");
+        Log.d("LIST",""+requestCode);
+        Log.d("LIST",""+resultCode);
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_UPDATE_LIST && resultCode == WebAppActivity.RESULT_DELETE_OK){
+            int id = data.getIntExtra(WebAppActivity.OUT_WEB_APP_ID,-1);
+            listWebAppsAdapter.remove(id);
+        }
+        else if(requestCode == REQUEST_UPDATE_LIST && resultCode == WebAppActivity.RESULT_EDIT_OK){
+            WebApp webApp = (WebApp) data.getSerializableExtra(WebAppActivity.OUT_WEB_APP);
+            listWebAppsAdapter.update(webApp);
+        }
     }
 
     private class InnerReceiver extends BroadcastReceiver

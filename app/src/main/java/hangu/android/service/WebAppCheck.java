@@ -25,16 +25,17 @@ import hangu.android.core.NotifierStatus;
 
 /**
  * Created by Victor Menegusso on 26/03/17.
+ * Usa o mesmo objeto para varios JOBS ( confirmar )
  */
-
 public class WebAppCheck extends JobService {
 
+    public static final String IN_ID = "IN_ID";
     public static final String IN_URL = "IN_URL";
     public static final String IN_HTTPMETHOD = "IN_HTTPMETHOD";
 
-    private String url;
-    private String httpMethod;
-
+    public WebAppCheck(){
+        Log.i("WebAppCheck", "Construtor ");
+    }
     /*
     private Handler mJobHandler = new Handler(new Handler.Callback() {
 
@@ -55,9 +56,13 @@ public class WebAppCheck extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
         Log.i("WebAppCheck", "onStartJob: " + params.getJobId());
-        loadExtras(params);
+
+        PersistableBundle extras = params.getExtras();
+        String url = (String) extras.get(IN_URL);
+        String httpMethod = (String) extras.get(IN_HTTPMETHOD);
+
         //mJobHandler.sendMessage( Message.obtain( mJobHandler, 1, params ) );
-        new Thread(new InnerThread(params)).start();
+        new Thread(new InnerThread(params, url, httpMethod)).start();
         return true; // EXECUTE in thread
     }
 
@@ -68,13 +73,7 @@ public class WebAppCheck extends JobService {
         return true;
     }
 
-    private void loadExtras(JobParameters params){
-        PersistableBundle extras = params.getExtras();
-        url = (String) extras.get(IN_URL);
-        httpMethod = (String) extras.get(IN_HTTPMETHOD);
-    }
-
-    private boolean pingURL() {
+    private boolean pingURL(String url, String httpMethod) {
 
         if(url.startsWith("http"))
             url = url.replaceFirst("^https", "http");
@@ -91,24 +90,34 @@ public class WebAppCheck extends JobService {
         } catch (IOException exception) {
             //exception.printStackTrace();
             Log.i("WebAppCheck", url+" IOException: ");
+            if(url.contains("www.google.com.br")){
+                exception.printStackTrace();
+            }
+            else if(url.contains("www.facebook.com") ) {
+                exception.printStackTrace();
+            }
             return false;
         }
     }
 
     private class InnerThread implements Runnable{
-        JobParameters params;
+        private JobParameters params;
+        private String url;
+        private String httpMethod;
 
-        public InnerThread(JobParameters params){
+        public InnerThread(JobParameters params, String url, String httpMethod){
             this.params = params;
+            this.url = url;
+            this.httpMethod = httpMethod;
         }
         @Override
         public void run() {
-            boolean r = pingURL();
+            boolean r = pingURL(url,httpMethod);
             Log.i("WebAppCheck", "on start job: "+params.getJobId() + r);
 
             if(!r) {
                 NotifierStatus ns = new NotifierStatus();
-                ns.notifyWebAppOffline(getApplicationContext(), url);
+                ns.notifyWebAppOffline(getApplicationContext(), params.getJobId(), url);
             }
 
             // info the system task finish

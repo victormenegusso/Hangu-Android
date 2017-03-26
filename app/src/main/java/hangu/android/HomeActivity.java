@@ -25,7 +25,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void openWebApp(View view) {
-        Intent intent = new Intent(this, WebAppActivity.class);
+        Intent intent = new Intent(this, PersistWebAppActivity.class);
         startActivity(intent);
     }
 
