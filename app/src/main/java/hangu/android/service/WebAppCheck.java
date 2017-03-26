@@ -1,16 +1,27 @@
 package hangu.android.service;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import hangu.android.HomeActivity;
+import hangu.android.R;
+import hangu.android.core.NotifierStatus;
 
 /**
  * Created by Victor Menegusso on 26/03/17.
@@ -71,12 +82,15 @@ public class WebAppCheck extends JobService {
             url = "http://"+url;
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setConnectTimeout(1000);
-            connection.setReadTimeout(1000);
+            connection.setConnectTimeout(7000);
+            connection.setReadTimeout(7000);
             connection.setRequestMethod(httpMethod);
             int responseCode = connection.getResponseCode();
+            Log.i("WebAppCheck", url+" CODE: "+responseCode);
             return (200 <= responseCode && responseCode <= 399);
         } catch (IOException exception) {
+            //exception.printStackTrace();
+            Log.i("WebAppCheck", url+" IOException: ");
             return false;
         }
     }
@@ -90,10 +104,15 @@ public class WebAppCheck extends JobService {
         @Override
         public void run() {
             boolean r = pingURL();
-            Log.i("WebAppCheck", "on start job: " + r);
+            Log.i("WebAppCheck", "on start job: "+params.getJobId() + r);
+
+            if(!r) {
+                NotifierStatus ns = new NotifierStatus();
+                ns.notifyWebAppOffline(getApplicationContext(), url);
+            }
 
             // info the system task finish
-            jobFinished( params, false );
+            jobFinished(params, false);
         }
     }
 
