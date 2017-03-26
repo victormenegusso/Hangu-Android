@@ -2,6 +2,10 @@ package hangu.android.entity;
 
 /**
  * Created by Victor Menegusso on 07/03/17.
+ *
+ * status -> Indicates the status of the application
+ * checkInPeriod ->  Is the check period, if the value is 0 does not have automatic check.
+ *
  */
 
 public class WebApp {
@@ -10,18 +14,12 @@ public class WebApp {
     private String url;
     private String httpMethod;
     private Status status;
+    private long checkInPeriod; //
 
     public WebApp(){
         this.status = Status.WAIT_CONNECTION;
+        checkInPeriod = 0;
     }
-
-    public WebApp(String name, String url, String httpMethod) {
-        this.name = name;
-        this.url = url;
-        this.httpMethod = httpMethod;
-        this.status = Status.WAIT_CONNECTION;
-    }
-
 
     public int getId() {
         return id;
@@ -61,5 +59,13 @@ public class WebApp {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public long getCheckInPeriod() {
+        return checkInPeriod;
+    }
+
+    public void setCheckInPeriod(long checkInPeriod) {
+        this.checkInPeriod = checkInPeriod;
     }
 }

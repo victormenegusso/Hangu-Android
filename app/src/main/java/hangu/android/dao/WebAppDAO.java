@@ -20,6 +20,7 @@ public class WebAppDAO {
     private static final String COLUMN_NAME_NAME = "name";
     private static final String COLUMN_NAME_URL = "url";
     private static final String COLUMN_NAME_HTTP_METHOD = "http_method";
+    private static final String COLUMN_NAME_CHECKIN_PERIOD = "checkin_period";
 
     private DBHelper dataBaseHelper;
     private SQLiteDatabase db;
@@ -40,6 +41,7 @@ public class WebAppDAO {
         values.put(COLUMN_NAME_NAME, webApp.getName());
         values.put(COLUMN_NAME_URL, webApp.getUrl());
         values.put(COLUMN_NAME_HTTP_METHOD, webApp.getHttpMethod());
+        values.put(COLUMN_NAME_CHECKIN_PERIOD, webApp.getCheckInPeriod());
 
         return db.insert(TABLE_NAME, null, values);
     }
@@ -49,6 +51,7 @@ public class WebAppDAO {
         values.put(COLUMN_NAME_NAME, webApp.getName());
         values.put(COLUMN_NAME_URL, webApp.getUrl());
         values.put(COLUMN_NAME_HTTP_METHOD, webApp.getHttpMethod());
+        values.put(COLUMN_NAME_CHECKIN_PERIOD, webApp.getCheckInPeriod());
 
         return db.update(TABLE_NAME, values, COLUMN_NAME_ID+" = " + webApp.getId(), null) > 0;
     }
@@ -61,7 +64,7 @@ public class WebAppDAO {
 
         List<WebApp> webApps = new ArrayList<>();
 
-        String [] columns = { COLUMN_NAME_ID, COLUMN_NAME_NAME, COLUMN_NAME_URL, COLUMN_NAME_HTTP_METHOD };
+        String [] columns = { COLUMN_NAME_ID, COLUMN_NAME_NAME, COLUMN_NAME_URL, COLUMN_NAME_HTTP_METHOD, COLUMN_NAME_CHECKIN_PERIOD };
 
         Cursor cursor = db.query ( TABLE_NAME, columns, null, null, null, null, null );
         cursor.moveToFirst();
@@ -72,6 +75,7 @@ public class WebAppDAO {
             webApp.setName( cursor.getString(1) );
             webApp.setUrl( cursor.getString(2) );
             webApp.setHttpMethod( cursor.getString(3) );
+            webApp.setCheckInPeriod( cursor.getLong(4) );
 
             webApps.add( webApp );
             cursor . moveToNext ();
@@ -85,7 +89,8 @@ public class WebAppDAO {
         sql += COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
         sql += COLUMN_NAME_NAME + " TEXT NOT NULL, ";
         sql += COLUMN_NAME_URL + " TEXT NOT NULL, ";
-        sql += COLUMN_NAME_HTTP_METHOD + " TEXT NOT NULL)";
+        sql += COLUMN_NAME_HTTP_METHOD + " TEXT NOT NULL, ";
+        sql += COLUMN_NAME_CHECKIN_PERIOD + " INTEGER) ";
 
         return sql;
     }
