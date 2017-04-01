@@ -35,12 +35,13 @@ public class ListWebAppsAdapter extends RecyclerView.Adapter {
         ListWebAppsViewHolder holder = (ListWebAppsViewHolder) viewHolder;
         WebApp webApp = webApps.get(position);
 
-        holder.nome.setText(webApp.getName());
-        holder.url.setText(webApp.getUrl());
-        holder.httpMethod.setText(webApp.getHttpMethod());
-        holder.status.setText(webApp.getStatus().toString());
-        holder.context = context;
-        holder.webApp = webApp;
+        //holder.nome.setText(webApp.getName());
+        //holder.url.setText(webApp.getUrl());
+        //holder.httpMethod.setText(webApp.getHttpMethod());
+        //holder.status.setText(webApp.getStatus().toString());
+        //holder.context = context;
+        //holder.webApp = webApp;
+        holder.setHolder(context,webApp);
     }
 
     @Override

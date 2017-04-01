@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,6 +27,7 @@ public class ListWebAppsActivity extends AppCompatActivity {
 
     private InnerReceiver receiver = null;
     private ListWebAppsAdapter listWebAppsAdapter;
+    private RecyclerView recyclerView;
     private List<WebApp> webApps;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class ListWebAppsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_web_apps);
 
         //ListView  webAppsView = (ListView) findViewById(R.id.lista);
+        /*
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
 
         WebAppDAO dao = new WebAppDAO(this);
@@ -54,7 +57,42 @@ public class ListWebAppsActivity extends AppCompatActivity {
             intent.putExtra(HttpConnector.IN_URL,webApp.getUrl());
             startService(intent);
         }
+        */
+
+        bindInterface();
+        loadInterface();
     }
+
+    private void bindInterface(){
+        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+    }
+
+    private void loadInterface(){
+        WebAppDAO dao = new WebAppDAO(this);
+        dao.open();
+        webApps = dao.list();
+        dao.close();
+
+        listWebAppsAdapter = new ListWebAppsAdapter(webApps,this);
+        recyclerView.setAdapter(listWebAppsAdapter);
+
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false);
+
+        recyclerView.setLayoutManager(layout);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
+
+        receiver = new InnerReceiver();
+        for( WebApp webApp : webApps){
+            Intent intent = new Intent(this, HttpConnector.class);
+            intent.putExtra(HttpConnector.IN_URL,webApp.getUrl());
+            startService(intent);
+        }
+
+    }
+
 
     @Override
     protected void onResume() {
@@ -85,6 +123,9 @@ public class ListWebAppsActivity extends AppCompatActivity {
         else if(requestCode == REQUEST_UPDATE_LIST && resultCode == WebAppActivity.RESULT_EDIT_OK){
             WebApp webApp = (WebApp) data.getSerializableExtra(WebAppActivity.OUT_WEB_APP);
             listWebAppsAdapter.update(webApp);
+        }
+        else if(requestCode == REQUEST_UPDATE_LIST && resultCode == 0){ // backbutton
+            loadInterface();
         }
     }
 
