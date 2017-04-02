@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import java.util.List;
 import hangu.android.dao.WebAppDAO;
 import hangu.android.entity.Status;
@@ -34,33 +32,39 @@ public class ListWebAppsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_web_apps);
 
-        //ListView  webAppsView = (ListView) findViewById(R.id.lista);
-        /*
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
-
-        WebAppDAO dao = new WebAppDAO(this);
-        dao.open();
-        webApps = dao.list();
-        dao.close();
-
-        listWebAppsAdapter = new ListWebAppsAdapter(webApps,this);
-        recyclerView.setAdapter(listWebAppsAdapter);
-
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-
-        recyclerView.setLayoutManager(layout);
-
         receiver = new InnerReceiver();
-        for( WebApp webApp : webApps){
-            Intent intent = new Intent(this, HttpConnector.class);
-            intent.putExtra(HttpConnector.IN_URL,webApp.getUrl());
-            startService(intent);
-        }
-        */
 
         bindInterface();
         loadInterface();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(HttpConnector.ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_UPDATE_LIST && resultCode == WebAppActivity.RESULT_DELETE_OK){
+            int id = data.getIntExtra(WebAppActivity.OUT_WEB_APP_ID,-1);
+            listWebAppsAdapter.remove(id);
+        }
+        else if(requestCode == REQUEST_UPDATE_LIST && resultCode == WebAppActivity.RESULT_EDIT_OK){
+            WebApp webApp = (WebApp) data.getSerializableExtra(WebAppActivity.OUT_WEB_APP);
+            listWebAppsAdapter.update(webApp);
+        }
+        else if(requestCode == REQUEST_UPDATE_LIST && resultCode == 0){ // backbutton
+            loadInterface();
+        }
     }
 
     private void bindInterface(){
@@ -84,7 +88,6 @@ public class ListWebAppsActivity extends AppCompatActivity {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
 
-        receiver = new InnerReceiver();
         for( WebApp webApp : webApps){
             Intent intent = new Intent(this, HttpConnector.class);
             intent.putExtra(HttpConnector.IN_URL,webApp.getUrl());
@@ -93,48 +96,10 @@ public class ListWebAppsActivity extends AppCompatActivity {
 
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("tail","onResume");
-
-        IntentFilter filter = new IntentFilter(HttpConnector.ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("tail","onPause");
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("LIST","onActivityResult");
-        Log.d("LIST",""+requestCode);
-        Log.d("LIST",""+resultCode);
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_UPDATE_LIST && resultCode == WebAppActivity.RESULT_DELETE_OK){
-            int id = data.getIntExtra(WebAppActivity.OUT_WEB_APP_ID,-1);
-            listWebAppsAdapter.remove(id);
-        }
-        else if(requestCode == REQUEST_UPDATE_LIST && resultCode == WebAppActivity.RESULT_EDIT_OK){
-            WebApp webApp = (WebApp) data.getSerializableExtra(WebAppActivity.OUT_WEB_APP);
-            listWebAppsAdapter.update(webApp);
-        }
-        else if(requestCode == REQUEST_UPDATE_LIST && resultCode == 0){ // backbutton
-            loadInterface();
-        }
-    }
-
     private class InnerReceiver extends BroadcastReceiver
     {
-
         @Override
         public void onReceive(Context context, Intent intent) {
-
             String url;
             boolean isCon;
 
@@ -153,7 +118,6 @@ public class ListWebAppsActivity extends AppCompatActivity {
                     break;
                 }
             }
-
         }
     }
 }

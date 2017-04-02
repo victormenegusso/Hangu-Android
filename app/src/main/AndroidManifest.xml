@@ -12,15 +12,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SocketReaderLog" />
-        <activity android:name=".ServerAppActivity" />
-        <activity android:name=".PersistWebAppActivity" />
-        <activity android:name=".PersistHanguSocketActivity" />
-        <activity android:name=".PersistServerAppActivity" />
-        <activity android:name=".ListHanguSocketsActivity" />
-        <activity android:name=".ListWebAppsActivity" />
-        <activity android:name=".ListServerAppsActivity" />
-        <activity android:name=".HanguSocketActivity" />
+        <activity android:name=".SocketReaderLog" android:label="@string/activity_hangu_socket_label"/>
+        <activity android:name=".ServerAppActivity" android:label="@string/activity_server_app_label"/>
+        <activity android:name=".WebAppActivity" android:label="@string/activity_web_app_label"/>
+        <activity android:name=".PersistWebAppActivity" android:label="@string/activity_persist_web_app_label"/>
+        <activity android:name=".PersistHanguSocketActivity" android:label="@string/activity_persist_hangu_socket_label"/>
+        <activity android:name=".PersistServerAppActivity" android:label="@string/activity_persist_server_app_label"/>
+        <activity android:name=".ListHanguSocketsActivity" android:label="@string/activity_list_hangu_socket_label"/>
+        <activity android:name=".ListWebAppsActivity" android:label="@string/activity_list_web_app_label"/>
+        <activity android:name=".ListServerAppsActivity" android:label="@string/activity_list_server_app_label"/>
+        <activity android:name=".HanguSocketActivity" android:label="@string/activity_hangu_socket_label"/>
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +42,6 @@
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <activity android:name=".WebAppActivity" />
     </application>
 
 </manifest>

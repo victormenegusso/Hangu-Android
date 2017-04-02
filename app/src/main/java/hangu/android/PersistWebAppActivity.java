@@ -3,6 +3,9 @@ package hangu.android;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -36,6 +39,23 @@ public class PersistWebAppActivity extends AppCompatActivity {
         loadInterface();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_persist_web_app, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                save();
+                return true;
+        }
+        return false;
+    }
+
     private void getExtras(){
         webApp = (WebApp) getIntent().getSerializableExtra(IN_WEB_APP);
     }
@@ -47,13 +67,18 @@ public class PersistWebAppActivity extends AppCompatActivity {
     }
 
     private void loadInterface(){
+        initSpinnerHttpMethod();
+        initSpinnerPeriod();
+
         if(webApp != null) {
             editTextName.setText( webApp.getName() );
             editTextURL.setText( webApp.getUrl() );
         }
+        else{
+            spinnerPeriod.setSelection(0);
+            spinnerHttpMethod.setSelection(0);
+        }
 
-        initSpinnerHttpMethod();
-        initSpinnerPeriod();
     }
 
     private void initSpinnerHttpMethod() {
@@ -65,13 +90,12 @@ public class PersistWebAppActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerHttpMethod.setAdapter(adapter);
-        spinnerHttpMethod.setSelection(0);
     }
 
     private void initSpinnerPeriod() {
         String[] spinnerArray = new String[6];
 
-        spinnerArray[0] = "-";
+        spinnerArray[0] = "0";
         spinnerArray[1] = "10 s";
         spinnerArray[2] = "30 s";
         spinnerArray[3] = "1 min";
@@ -81,7 +105,6 @@ public class PersistWebAppActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPeriod.setAdapter(adapter);
-        spinnerPeriod.setSelection(0);
     }
 
     private long getSpinnerPeriodValue(){
@@ -97,8 +120,7 @@ public class PersistWebAppActivity extends AppCompatActivity {
         return 0;
     }
 
-
-    public void save(View v){
+    public void save(){
         boolean isInsert = false;
 
         if(webApp == null){
@@ -114,13 +136,13 @@ public class PersistWebAppActivity extends AppCompatActivity {
         webApp.setCheckInPeriod( getSpinnerPeriodValue() );
 
         dao.open();
-        if(isInsert)
+        if(isInsert) {
             dao.insert(webApp);
+            SchedulerCheck.getScheduler().scheduleWebApps(this,webApp);
+        }
         else {
             dao.update(webApp);
-
             SchedulerCheck.getScheduler().scheduleWebApps(this,webApp);
-
             Intent it = new Intent();
             it.putExtra(OUT_WEB_APP, webApp);
             setResult(RESULT_EDIT_OK,it);

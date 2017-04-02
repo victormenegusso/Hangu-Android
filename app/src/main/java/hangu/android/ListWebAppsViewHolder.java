@@ -23,19 +23,15 @@ public class ListWebAppsViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView nome;
     private final TextView url;
-    //final TextView httpMethod;
-    //final TextView status;
     private final ImageView status;
     private WebApp webApp;
     private Context context;
 
     public ListWebAppsViewHolder(View view) {
         super(view);
-        nome = (TextView) view.findViewById(R.id.webapps_name);
 
+        nome = (TextView) view.findViewById(R.id.webapps_name);
         url = (TextView) view.findViewById(R.id.webapps_url);
-        //httpMethod = (TextView) view.findViewById(R.id.webapps_httpmethod);
-        //status = (TextView) view.findViewById(R.id.webapps_status);
         status = (ImageView) view.findViewById(R.id.imageView_status);
 
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +39,6 @@ public class ListWebAppsViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 Intent intent = new Intent(context, WebAppActivity.class);
                 intent.putExtra(WebAppActivity.IN_WEB_APP, (Serializable) webApp);
-                //context.startActivity(intent);
                 ((Activity) context).startActivityForResult(intent,ListWebAppsActivity.REQUEST_UPDATE_LIST);
             }
         });
@@ -60,7 +55,7 @@ public class ListWebAppsViewHolder extends RecyclerView.ViewHolder {
         if(webApp.getStatus() == Status.WAIT_CONNECTION)
             status.setImageResource(android.R.drawable.presence_away);
         else if(webApp.getStatus() == Status.OFFLINE)
-            status.setImageResource(android.R.drawable.presence_offline);
+            status.setImageResource(android.R.drawable.presence_busy);
         else if(webApp.getStatus() == Status.ONLINE)
             status.setImageResource(android.R.drawable.presence_online);
     }
