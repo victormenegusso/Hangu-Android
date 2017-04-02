@@ -15,8 +15,11 @@ public class ServerApp implements Serializable{
     private String pathProcessStart;
     private HanguSocket hanguSocket;
     private Status status;
+    private long checkInPeriod; //
 
     public ServerApp() {
+        status = Status.WAIT_CONNECTION;
+        checkInPeriod = 0;
     }
 
     public int getId() {
@@ -73,5 +76,13 @@ public class ServerApp implements Serializable{
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public long getCheckInPeriod() {
+        return checkInPeriod;
+    }
+
+    public void setCheckInPeriod(long checkInPeriod) {
+        this.checkInPeriod = checkInPeriod;
     }
 }

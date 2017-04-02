@@ -16,6 +16,7 @@ import hangu.android.core.SchedulerCheck;
 import hangu.android.dao.WebAppDAO;
 import hangu.android.entity.Status;
 import hangu.android.entity.WebApp;
+import hangu.android.hangu.android.view.converter.PeriodConverter;
 import hangu.android.service.HttpConnector;
 
 /**
@@ -146,7 +147,8 @@ public class WebAppActivity extends AppCompatActivity {
         textViewName.setText(webApp.getName());
         textViewURL.setText(webApp.getUrl());
         textViewHttpMethod.setText(webApp.getHttpMethod());
-        textViewCheck.setText(Long.toString(webApp.getCheckInPeriod()));
+        //textViewCheck.setText(Long.toString(webApp.getCheckInPeriod()));
+        textViewCheck.setText(PeriodConverter.getLabelFromValue( webApp.getCheckInPeriod()));
         updateInterfaceStatus();
     }
 

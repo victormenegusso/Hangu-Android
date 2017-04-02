@@ -26,6 +26,9 @@
     <string name="check_period">Período de Checagem</string>
     <string name="name">Nome</string>
     <string name="url">URL</string>
+    <string name="script_start">Script Start</string>
+    <string name="script_stop">Script Stop</string>
+    <string name="hangu_socket">Hangu Socket</string>
 
 
 </resources>

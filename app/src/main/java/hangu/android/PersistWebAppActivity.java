@@ -15,6 +15,7 @@ import hangu.android.core.SchedulerCheck;
 import hangu.android.dao.WebAppDAO;
 import hangu.android.entity.ServerApp;
 import hangu.android.entity.WebApp;
+import hangu.android.hangu.android.view.converter.PeriodConverter;
 
 public class PersistWebAppActivity extends AppCompatActivity {
 
@@ -73,6 +74,13 @@ public class PersistWebAppActivity extends AppCompatActivity {
         if(webApp != null) {
             editTextName.setText( webApp.getName() );
             editTextURL.setText( webApp.getUrl() );
+
+            if(webApp.getHttpMethod().equals("GET"))
+                spinnerHttpMethod.setSelection(0);
+            else
+                spinnerHttpMethod.setSelection(1);
+
+            spinnerPeriod.setSelection( PeriodConverter.getIndexFromValue(webApp.getCheckInPeriod()) );
         }
         else{
             spinnerPeriod.setSelection(0);
@@ -93,31 +101,12 @@ public class PersistWebAppActivity extends AppCompatActivity {
     }
 
     private void initSpinnerPeriod() {
-        String[] spinnerArray = new String[6];
+        String[] spinnerArray;
 
-        spinnerArray[0] = "0";
-        spinnerArray[1] = "10 s";
-        spinnerArray[2] = "30 s";
-        spinnerArray[3] = "1 min";
-        spinnerArray[4] = "5 min";
-        spinnerArray[5] = "30 min";
-
+        spinnerArray = PeriodConverter.getArrayValues();
         ArrayAdapter<String> adapter =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPeriod.setAdapter(adapter);
-    }
-
-    private long getSpinnerPeriodValue(){
-        int ind = spinnerPeriod.getSelectedItemPosition();
-        switch (ind){
-            case 0 : return 0;
-            case 1 : return 10000;
-            case 2 : return 30000;
-            case 3 : return 60000;
-            case 4 : return 300000;
-            case 5 : return 1800000;
-        }
-        return 0;
     }
 
     public void save(){
@@ -133,7 +122,7 @@ public class PersistWebAppActivity extends AppCompatActivity {
         webApp.setUrl( editTextURL.getText().toString() );
 
         webApp.setHttpMethod( spinnerHttpMethod.getSelectedItem().toString() );
-        webApp.setCheckInPeriod( getSpinnerPeriodValue() );
+        webApp.setCheckInPeriod( PeriodConverter.getValueFromIndex( spinnerPeriod.getSelectedItemPosition() ) );
 
         dao.open();
         if(isInsert) {

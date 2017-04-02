@@ -36,33 +36,18 @@ public class WebAppCheck extends JobService {
     public WebAppCheck(){
         Log.i("WebAppCheck", "Construtor ");
     }
-    /*
-    private Handler mJobHandler = new Handler(new Handler.Callback() {
-
-        @Override
-        public boolean handleMessage( Message msg ) {
-
-            boolean r = pingURL();
-            Log.i("WebAppCheck", "on start job: " + r);
-
-            // info the system task finish
-            jobFinished( (JobParameters) msg.obj, false );
-            return true;
-        }
-
-    } );
-    */
 
     @Override
     public boolean onStartJob(JobParameters params) {
         Log.i("WebAppCheck", "onStartJob: " + params.getJobId());
 
         PersistableBundle extras = params.getExtras();
+        int id = extras.getInt(IN_ID);
         String url = (String) extras.get(IN_URL);
         String httpMethod = (String) extras.get(IN_HTTPMETHOD);
 
         //mJobHandler.sendMessage( Message.obtain( mJobHandler, 1, params ) );
-        new Thread(new InnerThread(params, url, httpMethod)).start();
+        new Thread(new InnerThread(params, id, url, httpMethod)).start();
         return true; // EXECUTE in thread
     }
 
@@ -102,11 +87,13 @@ public class WebAppCheck extends JobService {
 
     private class InnerThread implements Runnable{
         private JobParameters params;
+        private int id;
         private String url;
         private String httpMethod;
 
-        public InnerThread(JobParameters params, String url, String httpMethod){
+        public InnerThread(JobParameters params, int id, String url, String httpMethod){
             this.params = params;
+            this.id = id;
             this.url = url;
             this.httpMethod = httpMethod;
         }
@@ -117,7 +104,7 @@ public class WebAppCheck extends JobService {
 
             if(!r) {
                 NotifierStatus ns = new NotifierStatus();
-                ns.notifyWebAppOffline(getApplicationContext(), params.getJobId(), url);
+                ns.notifyWebAppOffline(getApplicationContext(), id, url);
             }
 
             // info the system task finish
