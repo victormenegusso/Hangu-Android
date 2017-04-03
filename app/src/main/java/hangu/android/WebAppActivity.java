@@ -187,7 +187,7 @@ public class WebAppActivity extends AppCompatActivity {
             textViewStatus.setText("ONLINE");
         else if(webApp.getStatus() == Status.OFFLINE)
             textViewStatus.setText("OFFLINE");
-        else if(webApp.getStatus() == Status.ONLINE)
+        else if(webApp.getStatus() == Status.WAIT_CONNECTION)
             textViewStatus.setText("Conectando...");
     }
 

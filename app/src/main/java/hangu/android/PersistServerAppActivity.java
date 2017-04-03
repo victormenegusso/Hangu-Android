@@ -2,30 +2,31 @@ package hangu.android;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import hangu.android.dao.HanguSocketDAO;
 import hangu.android.dao.ServerAppDAO;
 import hangu.android.entity.HanguSocket;
 import hangu.android.entity.ServerApp;
+import hangu.android.hangu.android.view.converter.PeriodConverter;
 
 public class PersistServerAppActivity extends AppCompatActivity {
     public static final String IN_SERVER_APP = "IN_SERVER_APP";
 
     private EditText editTextName;
     private EditText editTextURL;
+    private EditText editTextLogPath;
     private EditText editTextScriptStart;
     private EditText editTextScriptStop;
     private Spinner spinnerHanguSocket;
+    private Spinner spinnerPeriod;
 
     private ServerApp serverApp;
 
@@ -40,6 +41,23 @@ public class PersistServerAppActivity extends AppCompatActivity {
         loadInterface();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_persist_server_app, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                save();
+                return true;
+        }
+        return false;
+    }
+
     private void getExtras(){
         serverApp = (ServerApp) getIntent().getSerializableExtra(IN_SERVER_APP);
     }
@@ -47,20 +65,39 @@ public class PersistServerAppActivity extends AppCompatActivity {
     private void bindInterface(){
         editTextName = (EditText) findViewById(R.id.editText_name);
         editTextURL = (EditText) findViewById(R.id.editText_url);
+        editTextLogPath = (EditText) findViewById(R.id.editText_log_path);
         editTextScriptStart = (EditText) findViewById(R.id.editText_scriptStart);
         editTextScriptStop = (EditText) findViewById(R.id.editText_scriptStop);
         spinnerHanguSocket = (Spinner) findViewById(R.id.spinner_hanguSocket);
+        spinnerPeriod = (Spinner) findViewById( R.id.spinner_period );
     }
 
     private void loadInterface(){
+
+        initSpinnerPeriod();
+        initSpinnerHanguSocket();
+
         if(serverApp != null) {
             editTextName.setText(serverApp.getName());
-            editTextURL.setText(serverApp.getName());
-            editTextScriptStart.setText(serverApp.getName());
-            editTextScriptStop.setText(serverApp.getName());
-        }
+            editTextURL.setText(serverApp.getUrl());
+            editTextLogPath.setText(serverApp.getPathFileLog());
+            editTextScriptStart.setText(serverApp.getPathProcessStart());
+            editTextScriptStop.setText(serverApp.getPathProcessStop());
 
-        initSpinnerHanguSocket();
+            spinnerPeriod.setSelection( PeriodConverter.getIndexFromValue(serverApp.getCheckInPeriod()) );
+        }
+        else{
+            spinnerPeriod.setSelection(0);
+        }
+    }
+
+    private void initSpinnerPeriod() {
+        String[] spinnerArray;
+
+        spinnerArray = PeriodConverter.getArrayValues();
+        ArrayAdapter<String> adapter =  new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPeriod.setAdapter(adapter);
     }
 
     private void initSpinnerHanguSocket() {
@@ -83,7 +120,7 @@ public class PersistServerAppActivity extends AppCompatActivity {
         spinnerHanguSocket.setAdapter(adapter);
     }
 
-    public void save(View v){
+    public void save(){
         ServerAppDAO dao = new ServerAppDAO(this);
         boolean isInsert = false;
 
@@ -94,8 +131,11 @@ public class PersistServerAppActivity extends AppCompatActivity {
 
         serverApp.setName( editTextName.getText().toString() );
         serverApp.setUrl( editTextURL.getText().toString() );
+        serverApp.setPathFileLog( editTextLogPath.getText().toString() );
         serverApp.setPathProcessStart( editTextScriptStart.getText().toString() );
         serverApp.setPathProcessStop( editTextScriptStop.getText().toString() );
+
+        serverApp.setCheckInPeriod( PeriodConverter.getValueFromIndex( spinnerPeriod.getSelectedItemPosition() ) );
 
         serverApp.setHanguSocket( new HanguSocket() );
         serverApp.getHanguSocket().setId( spinnerMap.get( spinnerHanguSocket.getSelectedItemPosition() ) );
@@ -107,5 +147,6 @@ public class PersistServerAppActivity extends AppCompatActivity {
             dao.update(serverApp);
         dao.close();
 
+        finish();
     }
 }

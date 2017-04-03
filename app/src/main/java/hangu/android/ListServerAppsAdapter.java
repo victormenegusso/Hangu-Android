@@ -24,35 +24,23 @@ public class ListServerAppsAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.activity_list_server_apps_adapter, parent, false);
-
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_list_server_apps_adapter, parent, false);
         ListServerAppsViewHolder holder = new ListServerAppsViewHolder(view);
-
         return holder;
     }
 
-
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder,
-                                 int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         ListServerAppsViewHolder holder = (ListServerAppsViewHolder) viewHolder;
         ServerApp serverApp = serverApps.get(position);
-
-        holder.name.setText(serverApp.getName());
-        holder.url.setText(serverApp.getUrl());
-        holder.serverApp = serverApp;
-        holder.context = context;
+        holder.setHolder(context,serverApp);
     }
 
     @Override
     public int getItemCount() {
         return serverApps.size();
     }
-
-
 
 }
 

@@ -1,131 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_persist_server_app"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    android:orientation="vertical"
-    android:weightSum="1"
-    tools:context="hangu.android.PersistServerAppActivity">
-
-    <!-- NAME -->
-    <TextView
-        android:text="@string/name"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal|bold"/>
-
-    <EditText
-        android:id="@+id/editText_name"
-        tools:text="Name"
-        android:inputType="text"
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_persist_server_app"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:fontFamily="sans-serif" />
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:weightSum="1"
+        tools:context="hangu.android.PersistServerAppActivity">
 
-    <!-- URL -->
-    <TextView
-        android:text="@string/url"
+        <!-- NAME -->
+        <TextView
+            android:text="@string/name"
 
-        android:paddingTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal|bold"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal|bold"/>
 
-    <EditText
-        android:id="@+id/editText_url"
-        tools:text="Name"
-        android:inputType="text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:fontFamily="sans-serif"/>
+        <EditText
+            android:id="@+id/editText_name"
+            tools:text="Name"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif" />
 
-    <!-- SCRIPT START -->
-    <TextView
-        android:text="@string/script_start"
-        android:paddingTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal|bold"/>
+        <!-- URL -->
+        <TextView
+            android:text="@string/url"
 
+            android:paddingTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal|bold"/>
 
-    <EditText
-        android:id="@+id/editText_scriptStart"
-        tools:text="script start"
-        android:inputType="text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:fontFamily="sans-serif"/>
+        <EditText
+            android:id="@+id/editText_url"
+            tools:text="Name"
+            android:inputType="textUri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif"/>
 
-
-    <!-- SCRIPT STOP -->
-    <TextView
-        android:text="@string/script_stop"
-        android:paddingTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal|bold"/>
+        <!-- LOG PATH -->
+        <TextView
+            android:text="@string/log_path"
+            android:paddingTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal|bold"/>
 
 
-    <EditText
-        android:id="@+id/editText_scriptStop"
-        tools:text="script stop"
-        android:inputType="text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:fontFamily="sans-serif"/>
+        <EditText
+            android:id="@+id/editText_log_path"
+            tools:text="script start"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif"/>
 
-    <!-- HANGU SOCKET -->
-    <TextView
-        android:text="@string/script_stop"
-        android:paddingTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal|bold"/>/>
+        <!-- SCRIPT START -->
+        <TextView
+            android:text="@string/script_start"
+            android:paddingTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal|bold"/>
 
-    <Spinner
-        android:id="@+id/spinner_hanguSocket"
-        android:inputType="textPersonName"
 
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textSize="25sp"
-        android:fontFamily="sans-serif" />
+        <EditText
+            android:id="@+id/editText_scriptStart"
+            tools:text="script start"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif"/>
 
-    <!-- Check -->
-    <TextView
-        android:text="@string/check_period"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="5
-        dp"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif"
-        android:textStyle="normal|bold"/>
 
-    <Spinner
-        android:id="@+id/spinner_period"
-        android:inputType="textPersonName"
+        <!-- SCRIPT STOP -->
+        <TextView
+            android:text="@string/script_stop"
+            android:paddingTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal|bold"/>
 
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textSize="25sp"
-        android:fontFamily="sans-serif" />
+        <EditText
+            android:id="@+id/editText_scriptStop"
+            tools:text="script stop"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif"/>
 
-</LinearLayout>
+        <!-- HANGU SOCKET -->
+        <TextView
+            android:text="@string/script_stop"
+            android:paddingTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal|bold"/>/>
+
+        <Spinner
+            android:id="@+id/spinner_hanguSocket"
+            android:inputType="textPersonName"
+
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif" />
+
+        <!-- Check -->
+        <TextView
+            android:text="@string/check_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal|bold"/>
+
+        <Spinner
+            android:id="@+id/spinner_period"
+            android:inputType="textPersonName"
+
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif" />
+
+    </LinearLayout>
+</ScrollView>

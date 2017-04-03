@@ -14,12 +14,17 @@
     <string name="activity_list_hangu_socket_label">Hangu Sockets</string>
     <string name="activity_persist_hangu_socket_label">Registro Hangu Socket</string>
 
+    <string name="activity_socket_reader_log_label">Log</string>
+
     <!-- buttons -->
     <string name="action_check">Checar</string>
     <string name="action_delete">Deletar</string>
     <string name="action_edit">Editar</string>
     <string name="action_new">Salvar</string>
     <string name="action_save">Salvar</string>
+    <string name="action_start_servet">Iniciar Servidor</string>
+    <string name="action_stop_server">Parar Servidor</string>
+    <string name="action_read_log">Log</string>
 
     <!-- names -->
     <string name="http_method">Método HTTP</string>
@@ -28,7 +33,10 @@
     <string name="url">URL</string>
     <string name="script_start">Script Start</string>
     <string name="script_stop">Script Stop</string>
+    <string name="log_path">Log Path</string>
     <string name="hangu_socket">Hangu Socket</string>
+    <string name="port">Porta</string>
+    <string name="host">Host</string>
 
 
 </resources>

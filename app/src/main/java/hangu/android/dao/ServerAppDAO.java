@@ -21,6 +21,7 @@ public class ServerAppDAO {
     private static final String COLUMN_NAME_URL = "url";
     private static final String COLUMN_NAME_PATH_PROCESS_START = "path_process_start";
     private static final String COLUMN_NAME_PATH_PROCESS_STOP = "path_process_stop";
+    private static final String COLUMN_NAME_PATH_FILE_LOG = "path_file_log";
     private static final String COLUMN_NAME_HANGU_SOCKET_ID = "hangu_socket_id";
     private static final String COLUMN_NAME_CHECKIN_PERIOD = "checkin_period";
 
@@ -38,6 +39,7 @@ public class ServerAppDAO {
         sql += COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
         sql += COLUMN_NAME_NAME + " TEXT NOT NULL, ";
         sql += COLUMN_NAME_URL + " TEXT NOT NULL, ";
+        sql += COLUMN_NAME_PATH_FILE_LOG + " TEXT NOT NULL, ";
         sql += COLUMN_NAME_PATH_PROCESS_START + " TEXT NOT NULL, ";
         sql += COLUMN_NAME_PATH_PROCESS_STOP + " TEXT NOT NULL, ";
         sql += COLUMN_NAME_HANGU_SOCKET_ID + " INTEGER NOT NULL, ";
@@ -57,6 +59,7 @@ public class ServerAppDAO {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_NAME, serverApp.getName());
         values.put(COLUMN_NAME_URL, serverApp.getUrl());
+        values.put(COLUMN_NAME_PATH_FILE_LOG, serverApp.getPathFileLog());
         values.put(COLUMN_NAME_PATH_PROCESS_START, serverApp.getPathProcessStart());
         values.put(COLUMN_NAME_PATH_PROCESS_STOP, serverApp.getPathProcessStop());
         values.put(COLUMN_NAME_HANGU_SOCKET_ID, serverApp.getHanguSocket().getId());
@@ -69,6 +72,7 @@ public class ServerAppDAO {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME_NAME, serverApp.getName());
         values.put(COLUMN_NAME_URL, serverApp.getUrl());
+        values.put(COLUMN_NAME_PATH_FILE_LOG, serverApp.getPathFileLog());
         values.put(COLUMN_NAME_PATH_PROCESS_START, serverApp.getPathProcessStart());
         values.put(COLUMN_NAME_PATH_PROCESS_STOP, serverApp.getPathProcessStop());
         values.put(COLUMN_NAME_HANGU_SOCKET_ID, serverApp.getHanguSocket().getId());
@@ -85,7 +89,7 @@ public class ServerAppDAO {
 
         List<ServerApp> serverApps = new ArrayList<>();
 
-        String [] columns = { COLUMN_NAME_ID, COLUMN_NAME_NAME, COLUMN_NAME_URL, COLUMN_NAME_PATH_PROCESS_START, COLUMN_NAME_PATH_PROCESS_STOP, COLUMN_NAME_HANGU_SOCKET_ID, COLUMN_NAME_CHECKIN_PERIOD };
+        String [] columns = { COLUMN_NAME_ID, COLUMN_NAME_NAME, COLUMN_NAME_URL, COLUMN_NAME_PATH_PROCESS_START, COLUMN_NAME_PATH_PROCESS_STOP, COLUMN_NAME_HANGU_SOCKET_ID, COLUMN_NAME_CHECKIN_PERIOD, COLUMN_NAME_PATH_FILE_LOG };
         Cursor cursor = db.query ( TABLE_NAME, columns, null, null, null, null, null);
         cursor.moveToFirst ();
 
@@ -98,7 +102,7 @@ public class ServerAppDAO {
             serverApp.setPathProcessStart( cursor.getString(3) );
             serverApp.setPathProcessStop( cursor.getString(4) );
             serverApp.setCheckInPeriod (cursor.getLong(6) );
-
+            serverApp.setPathFileLog(cursor.getString(7));
             int hanguSocketID= cursor.getInt(5);
 
             HanguSocketDAO hsDAO = new HanguSocketDAO(context);
@@ -117,7 +121,7 @@ public class ServerAppDAO {
 
         ServerApp serverApp = null;
 
-        String [] columns = { COLUMN_NAME_ID, COLUMN_NAME_NAME, COLUMN_NAME_URL, COLUMN_NAME_PATH_PROCESS_START, COLUMN_NAME_PATH_PROCESS_STOP, COLUMN_NAME_HANGU_SOCKET_ID, COLUMN_NAME_CHECKIN_PERIOD };
+        String [] columns = { COLUMN_NAME_ID, COLUMN_NAME_NAME, COLUMN_NAME_URL, COLUMN_NAME_PATH_PROCESS_START, COLUMN_NAME_PATH_PROCESS_STOP, COLUMN_NAME_HANGU_SOCKET_ID, COLUMN_NAME_CHECKIN_PERIOD, COLUMN_NAME_PATH_FILE_LOG };
         Cursor cursor = db.query(TABLE_NAME, columns, COLUMN_NAME_ID + " = " + id, null, null, null, null);
         cursor.moveToFirst();
         if (!cursor.isAfterLast()) {
@@ -129,6 +133,7 @@ public class ServerAppDAO {
             serverApp.setPathProcessStart( cursor.getString(3) );
             serverApp.setPathProcessStop( cursor.getString(4) );
             serverApp.setCheckInPeriod (cursor.getLong(6) );
+            serverApp.setPathFileLog(cursor.getString(7));
 
             int hanguSocketID= cursor.getInt(5);
 

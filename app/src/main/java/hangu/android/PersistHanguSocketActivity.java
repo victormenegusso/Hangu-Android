@@ -3,6 +3,9 @@ package hangu.android;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -27,6 +30,23 @@ public class PersistHanguSocketActivity extends AppCompatActivity {
         loadInterface();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_persist_hangu_socket, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                save();
+                return true;
+        }
+        return false;
+    }
+
     private void getExtras(){
         hanguSocket = (HanguSocket) getIntent().getSerializableExtra(IN_HANGU_SOCKET);
     }
@@ -43,13 +63,7 @@ public class PersistHanguSocketActivity extends AppCompatActivity {
         }
     }
 
-    private void a(){
-        setResult(RESULT_OK);
-        finish();
-    }
-
-
-    public void save(View v){
+    public void save(){
         HanguSocketDAO dao = new HanguSocketDAO(this);
 
         boolean isInsert = false;
@@ -70,6 +84,7 @@ public class PersistHanguSocketActivity extends AppCompatActivity {
             dao.update(hanguSocket);
         dao.close();
 
-        a();
+        setResult(RESULT_OK);
+        finish();
     }
 }

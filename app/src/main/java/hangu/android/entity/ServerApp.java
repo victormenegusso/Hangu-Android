@@ -11,6 +11,7 @@ public class ServerApp implements Serializable{
     private int id;
     private String name;
     private String url;
+    private String pathFileLog;
     private String pathProcessStop;
     private String pathProcessStart;
     private HanguSocket hanguSocket;
@@ -84,5 +85,13 @@ public class ServerApp implements Serializable{
 
     public void setCheckInPeriod(long checkInPeriod) {
         this.checkInPeriod = checkInPeriod;
+    }
+
+    public String getPathFileLog() {
+        return pathFileLog;
+    }
+
+    public void setPathFileLog(String pathFileLog) {
+        this.pathFileLog = pathFileLog;
     }
 }

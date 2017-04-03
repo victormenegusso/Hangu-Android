@@ -28,7 +28,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/webapps_name"
+            android:id="@+id/textView_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
@@ -37,7 +37,7 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:id="@+id/webapps_url"
+            android:id="@+id/textView_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -45,15 +45,5 @@
             android:fontFamily="sans-serif"
             android:textStyle="normal|italic" />
     </LinearLayout>
-
-
-        <!--
-        <TextView
-            android:id="@+id/webapps_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="status"
-            android:textSize="20sp" />
-        -->
 </LinearLayout>
 

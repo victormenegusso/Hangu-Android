@@ -30,8 +30,8 @@ public class ListWebAppsViewHolder extends RecyclerView.ViewHolder {
     public ListWebAppsViewHolder(View view) {
         super(view);
 
-        nome = (TextView) view.findViewById(R.id.webapps_name);
-        url = (TextView) view.findViewById(R.id.webapps_url);
+        nome = (TextView) view.findViewById(R.id.textView_name);
+        url = (TextView) view.findViewById(R.id.textView_url);
         status = (ImageView) view.findViewById(R.id.imageView_status);
 
         itemView.setOnClickListener(new View.OnClickListener() {

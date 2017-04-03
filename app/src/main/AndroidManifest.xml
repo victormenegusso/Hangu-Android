@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SocketReaderLog" android:label="@string/activity_hangu_socket_label"/>
+        <activity android:name=".SocketReaderLog" android:label="@string/activity_socket_reader_log_label"/>
         <activity android:name=".ServerAppActivity" android:label="@string/activity_server_app_label"/>
         <activity android:name=".WebAppActivity" android:label="@string/activity_web_app_label"/>
         <activity android:name=".PersistWebAppActivity" android:label="@string/activity_persist_web_app_label"/>
