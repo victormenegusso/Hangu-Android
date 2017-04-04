@@ -37,7 +37,8 @@ public class ListServerAppsViewHolder extends RecyclerView.ViewHolder{
             public void onClick(View v) {
                 Intent intent = new Intent(context, ServerAppActivity.class);
                 intent.putExtra(ServerAppActivity.IN_SERVER_APP, (Serializable) serverApp);
-                context.startActivity(intent);
+                //context.startActivity(intent);
+                ((Activity) context).startActivityForResult(intent,ListWebAppsActivity.REQUEST_UPDATE_LIST);
             }
         });
     }

@@ -1,5 +1,6 @@
 package hangu.android;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,14 +12,21 @@ import android.widget.Spinner;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import hangu.android.core.SchedulerCheck;
 import hangu.android.dao.HanguSocketDAO;
+import hangu.android.dao.Preferences;
 import hangu.android.dao.ServerAppDAO;
 import hangu.android.entity.HanguSocket;
 import hangu.android.entity.ServerApp;
 import hangu.android.hangu.android.view.converter.PeriodConverter;
 
 public class PersistServerAppActivity extends AppCompatActivity {
+
     public static final String IN_SERVER_APP = "IN_SERVER_APP";
+    public static final String OUT_SERVER_APP = "OUT_SERVER_APP";
+
+    public static final int RESULT_EDIT_OK = 2;
 
     private EditText editTextName;
     private EditText editTextURL;
@@ -143,8 +151,19 @@ public class PersistServerAppActivity extends AppCompatActivity {
         dao.open();
         if(isInsert)
             dao.insert(serverApp);
-        else
+        else{
             dao.update(serverApp);
+            Intent it = new Intent();
+            it.putExtra(OUT_SERVER_APP, serverApp);
+            setResult(RESULT_EDIT_OK,it);
+        }
+
+        if(serverApp.getCheckInPeriod() == 0){
+            SchedulerCheck.getScheduler().cancelScheduleServerApp(this,serverApp.getId());
+        }else if(Preferences.getPreferences(this).getMonitorStatus()){
+            SchedulerCheck.getScheduler().scheduleServerApps(this,serverApp);
+        }
+
         dao.close();
 
         finish();

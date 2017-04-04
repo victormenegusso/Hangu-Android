@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import hangu.android.core.SchedulerCheck;
+import hangu.android.dao.Preferences;
 import hangu.android.dao.WebAppDAO;
 import hangu.android.entity.ServerApp;
 import hangu.android.entity.WebApp;
@@ -126,15 +127,19 @@ public class PersistWebAppActivity extends AppCompatActivity {
 
         dao.open();
         if(isInsert) {
-            dao.insert(webApp);
-            SchedulerCheck.getScheduler().scheduleWebApps(this,webApp);
+            webApp.setId( (int)dao.insert(webApp) );
         }
         else {
             dao.update(webApp);
-            SchedulerCheck.getScheduler().scheduleWebApps(this,webApp);
             Intent it = new Intent();
             it.putExtra(OUT_WEB_APP, webApp);
             setResult(RESULT_EDIT_OK,it);
+        }
+
+        if(webApp.getCheckInPeriod() == 0){
+            SchedulerCheck.getScheduler().cancelScheduleWebApp(this,webApp.getId());
+        }else if(Preferences.getPreferences(this).getMonitorStatus()){
+            SchedulerCheck.getScheduler().scheduleWebApps(this,webApp);
         }
 
         dao.close();

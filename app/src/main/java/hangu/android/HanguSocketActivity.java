@@ -16,9 +16,13 @@ import hangu.android.entity.HanguSocket;
 public class HanguSocketActivity extends AppCompatActivity {
 
     public static final String IN_HANGU_SOCKET = "IN_HANGU_SOCKET";
+    public static final int RESULT_EDIT_OK = 3;
+    public static final int REQUEST_EDIT = 1;
 
     private TextView textView_host;
     private TextView textView_port;
+
+    private boolean hasEdit;
     private HanguSocket hanguSocket;
 
     @Override
@@ -49,6 +53,17 @@ public class HanguSocketActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_EDIT && resultCode == PersistWebAppActivity.RESULT_EDIT_OK){
+            hasEdit = true;
+
+            hanguSocket = (HanguSocket) data.getSerializableExtra( PersistHanguSocketActivity.OUT_HANGU_SOCKET );
+            loadInterface();
+        }
+    }
+
     private void getExtras(){
         hanguSocket = (HanguSocket) getIntent().getSerializableExtra(IN_HANGU_SOCKET);
     }
@@ -66,6 +81,7 @@ public class HanguSocketActivity extends AppCompatActivity {
     public void edit(){
         Intent intent = new Intent(this,PersistHanguSocketActivity.class);
         intent.putExtra(PersistHanguSocketActivity.IN_HANGU_SOCKET,(Serializable) hanguSocket);
-        startActivity(intent);
+        startActivityForResult(intent,REQUEST_EDIT);
+
     }
 }

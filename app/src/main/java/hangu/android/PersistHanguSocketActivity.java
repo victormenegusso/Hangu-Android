@@ -1,5 +1,6 @@
 package hangu.android;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,9 @@ import hangu.android.entity.HanguSocket;
 public class PersistHanguSocketActivity extends AppCompatActivity {
 
     public static final String IN_HANGU_SOCKET = "IN_HANGU_SOCKET";
+    public static final String OUT_HANGU_SOCKET = "OUT_HANGU_SOCKET";
+
+    public static final int RESULT_EDIT_OK = 2;
 
     private EditText editTextHost;
     private EditText editTextPort;
@@ -77,14 +81,17 @@ public class PersistHanguSocketActivity extends AppCompatActivity {
 
 
         dao.open();
-        Log.d("--",""+isInsert);
         if(isInsert)
             dao.insert(hanguSocket);
-        else
+        else {
             dao.update(hanguSocket);
+
+            Intent it = new Intent();
+            it.putExtra(OUT_HANGU_SOCKET, hanguSocket);
+            setResult(RESULT_EDIT_OK,it);
+        }
         dao.close();
 
-        setResult(RESULT_OK);
         finish();
     }
 }

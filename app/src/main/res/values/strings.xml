@@ -25,6 +25,13 @@
     <string name="action_start_servet">Iniciar Servidor</string>
     <string name="action_stop_server">Parar Servidor</string>
     <string name="action_read_log">Log</string>
+    <string name="action_switch_monitor_status">Monitor Status</string>
+    <string name="action_create_web_app">Adicionar Web APP</string>
+    <string name="action_list_web_app">Listar Web APPs</string>
+    <string name="action_create_server_app">Adicionar Server APP</string>
+    <string name="action_list_server_app">Listar Server APPs</string>
+    <string name="action_create_hangu_socket">Adicionar Hangu Socket</string>
+    <string name="action_list_hangu_socket">Listar Hangu Socket</string>
 
     <!-- names -->
     <string name="http_method">Método HTTP</string>

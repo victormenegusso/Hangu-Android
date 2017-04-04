@@ -1,5 +1,6 @@
 package hangu.android;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,7 +35,9 @@ public class ListHanguSocketsViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 Intent intent = new Intent(context,HanguSocketActivity.class);
                 intent.putExtra(HanguSocketActivity.IN_HANGU_SOCKET,(Serializable) hanguSocket);
-                context.startActivity(intent);
+                //context.startActivity(intent);
+                ((Activity) context).startActivityForResult(intent,ListHanguSocketsActivity.REQUEST_UPDATE_LIST);
+
             }
         });
     }

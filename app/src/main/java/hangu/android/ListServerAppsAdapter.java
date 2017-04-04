@@ -42,5 +42,25 @@ public class ListServerAppsAdapter extends RecyclerView.Adapter {
         return serverApps.size();
     }
 
-}
+    public void update(ServerApp serverApp){
+        int i;
+        for(i = 0; i < serverApps.size(); i++) {
+            if (serverApps.get(i).getId() == serverApp.getId()) {
+                serverApps.remove(i);
+                break;
+            }
+        }
+        serverApps.add(i,serverApp);
+    }
 
+    public void remove(int id){
+        for(int i = 0; i < serverApps.size(); i++) {
+            if (serverApps.get(i).getId() == id) {
+                serverApps.remove(i);
+                notifyItemRemoved(i);
+                break;
+            }
+        }
+    }
+
+}

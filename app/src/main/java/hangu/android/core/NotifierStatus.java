@@ -10,7 +10,9 @@ import android.util.Log;
 
 import hangu.android.HomeActivity;
 import hangu.android.R;
+import hangu.android.ServerAppActivity;
 import hangu.android.WebAppActivity;
+import hangu.android.entity.ServerApp;
 
 /**
  * Created by victor on 26/03/17.
@@ -20,6 +22,7 @@ public class NotifierStatus {
 
     public void notifyWebAppOffline(Context context, int id, String url){
         Log.d("NotifierStatus", id+" "+url);
+
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.myrect)
@@ -41,7 +44,7 @@ public class NotifierStatus {
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(
-                        0,
+                        Integer.parseInt("1"+id),
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
         mBuilder.setContentIntent(resultPendingIntent);
@@ -49,7 +52,35 @@ public class NotifierStatus {
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // mId allows you to update the notification later on.
-        mNotificationManager.notify(id, mBuilder.build());
+        mNotificationManager.notify(Integer.parseInt("1"+id), mBuilder.build());
+    }
+
+
+    public void notifyServerAppOffline(Context context, int id, String url){
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.myrect)
+                        .setContentTitle("Server App Offine")
+                        .setContentText("Server App:" +url);
+
+        Intent resultIntent = new Intent(context, ServerAppActivity.class);
+        resultIntent.putExtra(ServerAppActivity.IN_SERVER_APP_ID,id);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addParentStack(ServerAppActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        Integer.parseInt("2"+id),
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(Integer.parseInt("2"+id), mBuilder.build());
     }
 
 }

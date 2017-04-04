@@ -2,7 +2,6 @@ package hangu.android;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,19 +23,15 @@ public class ListHanguSocketsAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.activity_list_hangu_sockets_adapter, parent, false);
-
         ListHanguSocketsViewHolder holder = new ListHanguSocketsViewHolder(view);
-
         return holder;
     }
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder,
-                                 int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         ListHanguSocketsViewHolder holder = (ListHanguSocketsViewHolder) viewHolder;
         HanguSocket hanguSocket = hanguSockets.get(position);
 
@@ -49,5 +44,26 @@ public class ListHanguSocketsAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return hanguSockets.size();
+    }
+
+    public void update(HanguSocket hanguSocket){
+        int i;
+        for(i = 0; i < hanguSockets.size(); i++) {
+            if (hanguSockets.get(i).getId() == hanguSocket.getId()) {
+                hanguSockets.remove(i);
+                break;
+            }
+        }
+        hanguSockets.add(i,hanguSocket);
+    }
+
+    public void remove(int id){
+        for(int i = 0; i < hanguSockets.size(); i++) {
+            if (hanguSockets.get(i).getId() == id) {
+                hanguSockets.remove(i);
+                notifyItemRemoved(i);
+                break;
+            }
+        }
     }
 }

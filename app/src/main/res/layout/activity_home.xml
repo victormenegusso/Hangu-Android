@@ -1,102 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:weightSum="1"
     tools:context="hangu.android.HomeActivity">
 
-    <Button
-        android:text="CREATE Web App"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/btn_webApps"
-        android:layout_alignParentEnd="true"
-        android:onClick="openWebApp"/>
-
-    <Button
-        android:text="Create Server APP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_listWebApps"
-        android:layout_alignParentStart="true"
-        android:id="@+id/btn_ServerApp"
-        android:layout_alignParentEnd="true"
-        android:onClick="openServerApp" />
-
-    <Button
-        android:text="List Web Apps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_listWebApps"
-        android:onClick="openListWebApps"
-        android:layout_below="@+id/btn_webApps"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="List Server Apps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_listServerApps"
-        android:onClick="openListServerApps"
-        android:layout_below="@+id/btn_ServerApp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="Create Hangu Socket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_listServerApps"
-        android:layout_alignParentStart="true"
-        android:id="@+id/btn_hanguSocket"
-        android:layout_alignParentEnd="true"
-        android:onClick="openHanguSocket" />
-
-    <Button
-        android:text="List Hangu Socket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_hanguSocket"
-        android:layout_alignParentStart="true"
-        android:id="@+id/btn_listHnaguSocket"
-        android:layout_alignParentEnd="true"
-        android:onClick="openListHanguSockets" />
-
-    <Button
-        android:text="Agendar"
-        android:layout_width="wrap_content"
+    <Switch
+        android:text="@string/action_switch_monitor_status"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_listHnaguSocket"
-        android:layout_alignParentStart="true"
-        android:id="@+id/agendar"
-        android:layout_alignParentEnd="true"
-        android:onClick="scheduler" />
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        android:id="@+id/switch_monitorStatus" />
 
     <Button
-        android:text="schedulerCancel"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_webApps"
+        android:text="@string/action_create_web_app"
+        android:paddingTop="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/agendar"
-        android:layout_alignParentStart="true"
-        android:id="@+id/cancel"
-        android:layout_alignParentEnd="true"
-        android:onClick="schedulerCancel" />
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:drawableLeft="@android:drawable/ic_menu_add"
+        android:onClick="openWebApp" />
 
     <Button
-        android:text="Notificar"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_listWebApps"
+        android:text="@string/action_list_web_app"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cancel"
-        android:layout_alignParentStart="true"
-        android:id="@+id/notificar"
-        android:layout_alignParentEnd="true"
-        android:onClick="notificar" />
-</RelativeLayout>
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:drawableLeft="@android:drawable/ic_menu_sort_by_size"
+        android:onClick="openListWebApps"/>
+
+    <Button
+        android:text="@string/action_create_server_app"
+        android:id="@+id/btn_ServerApp"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:drawableLeft="@android:drawable/ic_menu_add"
+        android:onClick="openServerApp"/>
+
+    <Button
+        android:id="@+id/btn_listServerApps"
+        android:text="@string/action_list_server_app"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:drawableLeft="@android:drawable/ic_menu_sort_by_size"
+        android:onClick="openListServerApps"/>
+
+    <Button
+        android:id="@+id/btn_hanguSocket"
+        android:text="@string/action_create_hangu_socket"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:drawableLeft="@android:drawable/ic_menu_add"
+        android:onClick="openHanguSocket"/>
+
+    <Button
+        android:text="@string/action_list_hangu_socket"
+        android:id="@+id/btn_listHnaguSocket"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:drawableLeft="@android:drawable/ic_menu_sort_by_size"
+        android:layout_below="@+id/btn_hanguSocket"
+        android:onClick="openListHanguSockets" />
+
+</LinearLayout>
